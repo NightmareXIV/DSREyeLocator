@@ -13,15 +13,21 @@ namespace DSREyeLocator
         public uint InstanceContentID;
 
         [FieldOffset(4)]
-        public uint unk_0x4;
+        public uint unk_4;
 
+        /// <summary>
+        /// We want this for eye
+        /// </summary>
         [FieldOffset(8)]
-        public byte unk_0x8;
+        public byte unk_8;
         
+        /// <summary>
+        /// Possibly junk data
+        /// </summary>
         [FieldOffset(10)]
-        public byte unk_0x10;
+        public byte unk_10;
 
         [FieldOffset(12)]
-        public ushort unk_0x12;
+        public ushort unk_12;
     }
 }

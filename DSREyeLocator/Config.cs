@@ -16,5 +16,7 @@ namespace DSREyeLocator
         public float Thickness = 5f;
         public uint Color = 0xC8FF0E00;
         public bool EnableBanner = true;
+        public bool BannerBlink = true;
+        [NonSerialized] internal bool Test = false;
     }
 }
