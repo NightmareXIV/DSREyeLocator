@@ -60,6 +60,7 @@ namespace DSREyeLocator
 
         private void Tick(Framework framework)
         {
+            if (Svc.ClientState.LocalPlayer == null) return;
             if(Svc.ClientState.TerritoryType == 968 || P.config.Test)
             {
                 Safe(delegate
