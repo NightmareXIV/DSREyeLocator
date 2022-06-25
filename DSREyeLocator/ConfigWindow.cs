@@ -75,6 +75,10 @@ namespace DSREyeLocator
                 var angle = ConeHandler.GetAngleTo(Svc.Targets.Target.Position.ToVector2());
                 ImGuiEx.Text(ConeHandler.IsInCone(Svc.Targets.Target.Position.ToVector2())?ImGuiColors.DalamudRed:ImGuiColors.DalamudWhite, $"{angle}");
             }
+            if (DalamudReflector.TryGetDalamudStartInfo(out var info))
+            {
+                ImGuiEx.TextCopy($"{info.GameVersion.ToString()}");
+            }
         }
 
         public override void OnClose()

@@ -4,6 +4,8 @@ using Dalamud.Game.Network;
 using Dalamud.Plugin;
 using ECommons.GameFunctions;
 using ECommons.MathHelpers;
+using ECommons.Opcodes;
+using ECommons.Reflection;
 using System;
 
 namespace DSREyeLocator
@@ -47,6 +49,19 @@ namespace DSREyeLocator
                 Svc.Framework.Update += Tick;
                 Svc.PluginInterface.UiBuilder.Draw += ws.Draw;
                 Svc.PluginInterface.UiBuilder.OpenConfigUi += delegate { configWindow.IsOpen = true; };
+
+                if (DalamudReflector.TryGetDalamudStartInfo(out var info))
+                {
+                    OpcodeUpdater.DownloadOpcodes($"https://github.com/Eternita-S/MyDalamudPlugins/raw/main/opcodes/{info.GameVersion}.txt",
+                        (dic) =>
+                        {
+                            if (dic.TryGetValue("MapEffect", out var code))
+                            {
+                                config.MapEventOpcode = code;
+                                PluginLog.Information($"Downloaded MapEffect opcode 0x{code:X}");
+                            }
+                        });
+                }
             });
         }
 
