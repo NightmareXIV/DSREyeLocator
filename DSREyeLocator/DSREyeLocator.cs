@@ -21,6 +21,7 @@ namespace DSREyeLocator
         internal int EyePos = -1;
         internal Dictionary<int, Vector2> EyesPositions = new()
         {
+            { 0, new(100.00f, 60.00f) },
             { 1, new(128.28f, 71.72f) },
             { 2, new(140.00f, 100.00f) },
             { 3, new(128.28f, 128.28f) },
