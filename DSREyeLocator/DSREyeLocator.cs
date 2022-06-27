@@ -20,6 +20,8 @@ namespace DSREyeLocator
         internal Config config;
         internal long SanctityStartTime = 0;
         internal long DeathStartTime = 0;
+        internal long SanctityStartTimeDelay = 0;
+        internal long DeathStartTimeDelay = 0;
         internal int EyePos = -1;
         internal Dictionary<int, Vector2> EyesPositions = new()
         {
@@ -90,14 +92,16 @@ namespace DSREyeLocator
                                 if (SanctityStartTime == 0 && b.CastActionId == 25569) //sanctity of the ward
                                 {
                                     SanctityStartTime = Environment.TickCount64;
+                                    if(!P.config.NoDelay) SanctityStartTimeDelay = Environment.TickCount64 + 11000;
                                 }
                                 else if (DeathStartTime == 0 && b.CastActionId == 27538) //death of the heavens
                                 {
                                     DeathStartTime = Environment.TickCount64;
+                                    if (!P.config.NoDelay) DeathStartTimeDelay = Environment.TickCount64 + 25000;
                                 }
                             }
                         }
-                        if ((IsSanctity() || IsDeath()) && EyesPositions.TryGetValue(EyePos, out var eye)
+                        if (((IsSanctity() && Environment.TickCount64 > SanctityStartTimeDelay) || (IsDeath() && Environment.TickCount64 > DeathStartTimeDelay)) && EyesPositions.TryGetValue(EyePos, out var eye)
                             && Svc.Objects.TryGetFirst(x => x is BattleNpc b && b.Name.ToString().EqualsAny("King Thordan")
                             && b.IsCharacterVisible(), out var thordan))
                         {

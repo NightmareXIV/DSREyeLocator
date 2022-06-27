@@ -1,4 +1,5 @@
-﻿using ECommons.MathHelpers;
+﻿using Dalamud.Interface.Components;
+using ECommons.MathHelpers;
 using ECommons.Reflection;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,8 @@ namespace DSREyeLocator
                 ImGui.InputInt("Vertical offset", ref P.config.VerticalOffset);
             }
             ImGui.Checkbox("Blinking", ref P.config.BannerBlink);
+            ImGui.Checkbox("No delay", ref P.config.NoDelay);
+            ImGuiComponents.HelpMarker("Delay displaying tethers and banner until it actually matters (when going out in sanctity/returning to the middle in death)");
             ImGui.Separator();
             ImGui.Checkbox("Test mode", ref P.config.Test);
             ImGui.Separator();
