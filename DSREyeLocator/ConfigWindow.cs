@@ -1,4 +1,5 @@
-﻿using Dalamud.Interface.Components;
+﻿using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Interface.Components;
 using ECommons.MathHelpers;
 using ECommons.Reflection;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DSREyeLocator
 {
-    internal class ConfigWindow : Window
+    internal unsafe class ConfigWindow : Window
     {
         internal bool OpcodeFound = false;
 
@@ -77,6 +78,10 @@ namespace DSREyeLocator
             {
                 var angle = ConeHandler.GetAngleTo(Svc.Targets.Target.Position.ToVector2());
                 ImGuiEx.Text(ConeHandler.IsInCone(Svc.Targets.Target.Position.ToVector2())?ImGuiColors.DalamudRed:ImGuiColors.DalamudWhite, $"{angle}");
+                if(Svc.Targets.Target is Character c)
+                {
+                    ImGuiEx.Text($"{c.Address.As<FFXIVClientStructs.FFXIV.Client.Game.Character.Character>()->NameID}");
+                }
             }
             if (DalamudReflector.TryGetDalamudStartInfo(out var info))
             {

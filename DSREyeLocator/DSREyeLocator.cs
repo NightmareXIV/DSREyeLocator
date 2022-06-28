@@ -34,6 +34,7 @@ namespace DSREyeLocator
             { 6, new(60.00f, 100.00f) },
             { 7, new(71.72f, 71.72f) },
         };
+        internal const uint KingThordanNameID = 3632;
 
         public DSREyeLocator(DalamudPluginInterface pi)
         {
@@ -87,7 +88,7 @@ namespace DSREyeLocator
                     {
                         foreach (var x in Svc.Objects)
                         {
-                            if (x is BattleNpc b && b.IsCasting && b.Name.ToString().EqualsAny("King Thordan"))
+                            if (x is BattleNpc b && b.IsCasting && b.NameId == KingThordanNameID)
                             {
                                 if (SanctityStartTime == 0 && b.CastActionId == 25569) //sanctity of the ward
                                 {
@@ -102,7 +103,7 @@ namespace DSREyeLocator
                             }
                         }
                         if (((IsSanctity() && Environment.TickCount64 > SanctityStartTimeDelay) || (IsDeath() && Environment.TickCount64 > DeathStartTimeDelay)) && EyesPositions.TryGetValue(EyePos, out var eye)
-                            && Svc.Objects.TryGetFirst(x => x is BattleNpc b && b.Name.ToString().EqualsAny("King Thordan")
+                            && Svc.Objects.TryGetFirst(x => x is BattleNpc b && b.NameId == KingThordanNameID
                             && b.IsCharacterVisible(), out var thordan))
                         {
                             if (P.config.EnableTether)
