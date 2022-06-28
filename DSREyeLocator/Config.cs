@@ -18,6 +18,6 @@ namespace DSREyeLocator
         public bool EnableBanner = true;
         public bool BannerBlink = true;
         [NonSerialized] internal bool Test = false;
-        public bool NoDelay = false;
+        public bool Delay = false;
     }
 }
