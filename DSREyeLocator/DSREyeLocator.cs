@@ -93,12 +93,12 @@ namespace DSREyeLocator
                                 if (SanctityStartTime == 0 && b.CastActionId == 25569) //sanctity of the ward
                                 {
                                     SanctityStartTime = Environment.TickCount64;
-                                    if(P.config.Delay) SanctityStartTimeDelay = Environment.TickCount64 + 11000;
+                                    if(P.config.Delay) SanctityStartTimeDelay = Environment.TickCount64 + P.config.SanctityDelay;
                                 }
                                 else if (DeathStartTime == 0 && b.CastActionId == 27538) //death of the heavens
                                 {
                                     DeathStartTime = Environment.TickCount64;
-                                    if (P.config.Delay) DeathStartTimeDelay = Environment.TickCount64 + 25000;
+                                    if (P.config.Delay) DeathStartTimeDelay = Environment.TickCount64 + P.config.DeathDelay;
                                 }
                             }
                         }
