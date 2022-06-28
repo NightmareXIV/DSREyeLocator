@@ -20,7 +20,7 @@ namespace DSREyeLocator
         public bool EnableBanner = true;
         public bool BannerBlink = true;
         [NonSerialized] internal bool Test = false;
-        public bool Delay = false;
+        public bool Delay = true;
         public int SanctityDelay = 11000;
         public int DeathDelay = 25000;
     }

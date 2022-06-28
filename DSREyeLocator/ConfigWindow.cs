@@ -73,10 +73,10 @@ namespace DSREyeLocator
                     P.config.DeathDelay = c.DeathDelay;
                 }
                 ImGui.SetNextItemWidth(50f);
-                ImGui.DragInt("Delay since start of Sanctity of the Ward cast, ms", ref P.config.SanctityDelay, 1, 0, 15000);
+                ImGui.DragInt("Delay since start of Sanctity of the Ward cast, ms", ref P.config.SanctityDelay, 10, 0, 15000);
                 ImGuiEx.Text("   - Sanctity of the Ward's Gaze resolves at 17731 ms");
                 ImGui.SetNextItemWidth(50f);
-                ImGui.DragInt("Delay since start of Death of the Heavens cast, ms", ref P.config.DeathDelay, 1, 0, 30000);
+                ImGui.DragInt("Delay since start of Death of the Heavens cast, ms", ref P.config.DeathDelay, 10, 0, 30000);
                 ImGuiEx.Text("   - Death of the Heavens's Gaze resolves at 34255 ms");
             }
             ImGui.Separator();
