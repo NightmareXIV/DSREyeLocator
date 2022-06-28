@@ -40,17 +40,28 @@ namespace DSREyeLocator
                 var col = P.config.Color.ToVector4();
                 ImGui.ColorEdit4("Tether color", ref col);
                 P.config.Color = col.ToUint();
-                if(Svc.Targets.Target != null && P.config.Test) SplatoonManager.DrawLine(SplatoonManager.Get(), Svc.ClientState.LocalPlayer.Position,
-                    Svc.Targets.Target.Position, P.config.Color, P.config.Thickness);
+                Safe(delegate
+                {
+                    if (Svc.Targets.Target != null && P.config.Test) SplatoonManager.DrawLine(SplatoonManager.Get(), Svc.ClientState.LocalPlayer.Position,
+                        Svc.Targets.Target.Position, P.config.Color, P.config.Thickness);
+                });
             }
             ImGui.Checkbox("Enable banner", ref P.config.EnableBanner);
             if (P.config.EnableBanner)
             {
-                ImGui.SetNextItemWidth(100f);
-                ImGui.InputInt("Vertical offset", ref P.config.VerticalOffset);
+                ImGui.SetNextItemWidth(50f);
+                ImGui.DragInt("Vertical offset", ref P.config.VerticalOffset);
+                ImGui.SetNextItemWidth(50f);
+                ImGui.DragInt("Horizontal offset", ref P.config.HorizontalOffset);
+                ImGui.SetNextItemWidth(50f);
+                ImGui.DragFloat("Scale", ref P.config.Scale, 0.002f, 0.1f, 10f);
+                P.config.Scale.ValidateRange(0.1f, 10f);
             }
             ImGui.Checkbox("Blinking", ref P.config.BannerBlink);
-            ImGui.Checkbox("Delay displaying information", ref P.config.Delay);
+            ImGuiEx.WithTextColor(ImGuiColors.DalamudOrange, delegate
+            {
+                ImGui.Checkbox("Delay displaying information (recommended)", ref P.config.Delay);
+            });
             ImGuiComponents.HelpMarker("Delay displaying tethers and banner until it actually matters (when going out in sanctity/returning to the middle in death)");
             ImGui.Separator();
             ImGui.Checkbox("Test mode", ref P.config.Test);

@@ -29,7 +29,7 @@ namespace DSREyeLocator
 
         public override void PreDraw()
         {
-            ImGuiHelpers.SetNextWindowPosRelativeMainViewport(new(ImGuiHelpers.MainViewport.Size.X / 2 - WinSize.X / 2, P.config.VerticalOffset));
+            ImGuiHelpers.SetNextWindowPosRelativeMainViewport(new(ImGuiHelpers.MainViewport.Size.X / 2 - WinSize.X / 2 + P.config.HorizontalOffset, P.config.VerticalOffset));
         }
 
         public override bool DrawConditions()
@@ -44,12 +44,12 @@ namespace DSREyeLocator
             WinSize = ImGui.GetWindowSize();
             if (Correct)
             {
-                ImGui.Image(imgYes.ImGuiHandle, new(imgYes.Width, imgYes.Height));
+                ImGui.Image(imgYes.ImGuiHandle, new(imgYes.Width * P.config.Scale, imgYes.Height * P.config.Scale));
             }
             else
             {
                 var image = P.config.BannerBlink && Environment.TickCount % 400 > 200 ? imgNo1 : imgNo2;
-                ImGui.Image(image.ImGuiHandle, new(image.Width, image.Height));
+                ImGui.Image(image.ImGuiHandle, new(image.Width * P.config.Scale, image.Height * P.config.Scale));
             }
         }
 

@@ -12,6 +12,8 @@ namespace DSREyeLocator
         public int Version { get; set; } = 1;
         public uint MapEventOpcode = 0x2E0;
         public int VerticalOffset = 100;
+        public int HorizontalOffset = 0;
+        public float Scale = 1f;
         public bool EnableTether = true;
         public float Thickness = 5f;
         public uint Color = 0xC8FF0E00;

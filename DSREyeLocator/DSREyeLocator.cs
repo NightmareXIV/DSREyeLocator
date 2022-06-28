@@ -108,10 +108,13 @@ namespace DSREyeLocator
                         {
                             if (P.config.EnableTether)
                             {
-                                SplatoonManager.DrawLine(SplatoonManager.Get(), Svc.ClientState.LocalPlayer.Position,
-                                    eye.ToVector3(), P.config.Color, P.config.Thickness);
-                                SplatoonManager.DrawLine(SplatoonManager.Get(), Svc.ClientState.LocalPlayer.Position,
-                                    thordan.Position, P.config.Color, P.config.Thickness);
+                                Safe(delegate
+                                {
+                                    SplatoonManager.DrawLine(SplatoonManager.Get(), Svc.ClientState.LocalPlayer.Position,
+                                        eye.ToVector3(), P.config.Color, P.config.Thickness);
+                                    SplatoonManager.DrawLine(SplatoonManager.Get(), Svc.ClientState.LocalPlayer.Position,
+                                        thordan.Position, P.config.Color, P.config.Thickness);
+                                });
                             }
                             if (P.config.EnableBanner)
                             {
