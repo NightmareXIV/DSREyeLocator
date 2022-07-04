@@ -101,6 +101,7 @@ namespace DSREyeLocator
                             ClearMarkers();
                         }
                     }
+                    ResolveFlames();
                     if (Svc.Condition[ConditionFlag.InCombat])
                     {
                         foreach (var x in Svc.Objects)
