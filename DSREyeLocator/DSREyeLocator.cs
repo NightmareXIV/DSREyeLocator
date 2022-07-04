@@ -1,7 +1,10 @@
 ﻿using Dalamud.Game;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Network;
+using Dalamud.Logging;
 using Dalamud.Plugin;
+using ECommons.Automation;
 using ECommons.GameFunctions;
 using ECommons.MathHelpers;
 using ECommons.Opcodes;
@@ -13,6 +16,7 @@ namespace DSREyeLocator
     public unsafe class DSREyeLocator : IDalamudPlugin
     {
         public string Name => "DSR Eye Locator";
+        internal const uint DSRTerritory = 968;
         internal static DSREyeLocator P { get; private set; }
         internal WindowSystem ws;
         internal ConfigWindow configWindow;
@@ -52,6 +56,7 @@ namespace DSREyeLocator
                 Svc.Framework.Update += Tick;
                 Svc.PluginInterface.UiBuilder.Draw += ws.Draw;
                 Svc.PluginInterface.UiBuilder.OpenConfigUi += delegate { configWindow.IsOpen = true; };
+                Svc.Condition.ConditionChange += Condition_ConditionChange;
 
                 if (DalamudReflector.TryGetDalamudStartInfo(out var info))
                 {
@@ -74,16 +79,28 @@ namespace DSREyeLocator
             Svc.GameNetwork.NetworkMessage -= OnNetworkMessage;
             Svc.Framework.Update -= Tick;
             Svc.PluginInterface.UiBuilder.Draw -= ws.Draw;
+            Svc.Condition.ConditionChange -= Condition_ConditionChange;
             Safe(overlayWindow.Dispose);
         }
 
         private void Tick(Framework framework)
         {
             if (Svc.ClientState.LocalPlayer == null) return;
-            if(Svc.ClientState.TerritoryType == 968 || P.config.Test)
+            if(Svc.ClientState.TerritoryType == DSRTerritory || P.config.Test)
             {
                 Safe(delegate
                 {
+                    if (FlamesClearRequested)
+                    {
+                        if (!Svc.Condition[ConditionFlag.Unconscious] &&
+                            Svc.Party.All(x => x.GameObject != null
+                            && x.GameObject.Struct()->GetIsTargetable()
+                            && !x.GameObject.Struct()->IsDead()))
+                        {
+                            FlamesClearRequested = false;
+                            ClearMarkers();
+                        }
+                    }
                     if (Svc.Condition[ConditionFlag.InCombat])
                     {
                         foreach (var x in Svc.Objects)
@@ -163,7 +180,7 @@ namespace DSREyeLocator
                             Svc.PluginInterface.SavePluginConfig(config);
                         }
                     }
-                    if (Svc.ClientState.TerritoryType == 968 || P.config.Test)
+                    if (Svc.ClientState.TerritoryType == DSRTerritory || P.config.Test)
                     {
                         var data = (FFXIVIpcMapEffect*)dataPtr;
                         if (opCode == P.config.MapEventOpcode)
@@ -189,6 +206,119 @@ namespace DSREyeLocator
                     }
                 }
             });
+        }
+
+        const uint EntangledFlames = 2759;
+        const uint SpreadingFlames = 2758;
+        bool FlamesResolved = false;
+        TickScheduler ClearScheduler;
+        bool FlamesClearRequested = false;
+        void ResolveFlames()
+        {
+            if(!FlamesResolved && Svc.Party
+                .Where(x => x.GameObject is PlayerCharacter)
+                .All(x => ((PlayerCharacter)x.GameObject)
+                .StatusList.Count(x => x.StatusId == EntangledFlames || x.StatusId == SpreadingFlames) == 6))
+            {
+                FlamesResolved = true;
+                Queue<string> EngangledCommands = new(new string[]
+                {
+                    "/enemysign bind1",
+                    "/enemysign ignore1",
+                });
+                Queue<string> NoneCommands = new(new string[]
+                {
+                    "/enemysign bind2",
+                    "/enemysign ignore2",
+                });
+                Queue<string> SpreadingCommands = new(new string[]
+                {
+                    "/enemysign attack1",
+                    "/enemysign attack2",
+                    "/enemysign attack3",
+                    "/enemysign attack4",
+                });
+                List<string> commands = new();
+                foreach(var x in Svc.Party.Where(x => x.GameObject is PlayerCharacter).Select(x => (PlayerCharacter)x.GameObject))
+                {
+                    if (x.TryGetPlaceholder(out var num))
+                    {
+                        if (x.StatusList.Any(x => x.StatusId == SpreadingFlames))
+                        {
+                            commands.Add($"{SpreadingCommands.Dequeue()} <{num}>");
+                        }
+                        else if (x.StatusList.Any(x => x.StatusId == EntangledFlames))
+                        {
+                            commands.Add($"{EngangledCommands.Dequeue()} <{num}>");
+                        }
+                        else
+                        {
+                            commands.Add($"{NoneCommands.Dequeue()} <{num}>");
+                        }
+                    }
+                    else
+                    {
+                        PluginLog.Error($"Failed to resolve placeholder for {x.Name}");
+                    }
+                }
+                if (P.config.WrothFlamesOperational)
+                {
+                    //MacroManager.Execute(commands);
+                }
+                else
+                {
+                    Svc.Chat.Print("=== Wroth flames ===");
+                    foreach (var x in commands)
+                    {
+                        Svc.Chat.Print(x);
+                    }
+                    Svc.Chat.Print("====================");
+                }
+                ClearScheduler?.Dispose();
+                ClearScheduler = new TickScheduler(ClearMarkers, 30000);
+            }
+        }
+        internal void ClearMarkers()
+        {
+            List<string> l = new();
+            for (var i = 1; i <= 8; i++)
+            {
+                l.Add($"/enemysign off <{i}>");
+            }
+            if (P.config.WrothFlamesOperational)
+            {
+                //MacroManager.Execute(l);
+            }
+            else
+            {
+                Svc.Chat.Print("=== Wroth flames ===");
+                foreach (var x in l)
+                {
+                    Svc.Chat.Print(x);
+                }
+                Svc.Chat.Print("====================");
+            }
+            ClearScheduler?.Dispose();
+        }
+
+        internal void Condition_ConditionChange(ConditionFlag flag, bool value)
+        {
+            if (flag == ConditionFlag.InCombat && Svc.ClientState.TerritoryType == DSRTerritory)
+            {
+                if (value)
+                {
+                    PluginLog.Debug("Combat started");
+                }
+                else
+                {
+                    PluginLog.Debug("Combat finished");
+                    if (FlamesResolved && ClearScheduler != null)
+                    {
+                        FlamesClearRequested = true;
+                    }
+                }
+                FlamesResolved = false;
+            }
         }
     }
 }
