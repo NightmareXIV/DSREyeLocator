@@ -24,5 +24,6 @@ namespace DSREyeLocator
         public int SanctityDelay = 11000;
         public int DeathDelay = 25000;
         public bool WrothFlamesOperational = false;
+        public bool WrothFlames = false;
     }
 }

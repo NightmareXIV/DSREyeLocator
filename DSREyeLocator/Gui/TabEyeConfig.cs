@@ -1,6 +1,4 @@
-﻿using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Interface.Components;
-using ECommons.MathHelpers;
+﻿using Dalamud.Interface.Components;
 using ECommons.Reflection;
 using System;
 using System.Collections.Generic;
@@ -8,25 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSREyeLocator
+namespace DSREyeLocator.Gui
 {
-    internal unsafe class ConfigWindow : Window
+    internal static class TabEyeConfig
     {
-        internal bool OpcodeFound = false;
-
-        public ConfigWindow() : base($"{P.Name} configuration")
+        internal static void Draw()
         {
-        }
-
-        public override void Draw()
-        {
-            ImGuiEx.Text("0x");
-            ImGui.SameLine();
-            ImGui.SetNextItemWidth(50f);
-            ImGuiEx.InputHex("MapEvent opcode", ref P.config.MapEventOpcode);
-            if(ImGui.Checkbox("Enable tether to eye and Thordan (requires Splatoon)", ref P.config.EnableTether))
+            if (ImGui.Checkbox("Enable tether to eye and Thordan (requires Splatoon)", ref P.config.EnableTether))
             {
-                if(P.config.EnableTether && !DalamudReflector.TryGetDalamudPlugin("Splatoon", out _))
+                if (P.config.EnableTether && !DalamudReflector.TryGetDalamudPlugin("Splatoon", out _))
                 {
                     Notify.Error("You do not have Splatoon installed");
                     P.config.EnableTether = false;
@@ -66,7 +54,7 @@ namespace DSREyeLocator
             if (P.config.Delay)
             {
                 ImGuiEx.TextWrapped("You can configure delays dependin on how much time you need for each mechanic:");
-                if(ImGui.SmallButton("Reset delays to defaults"))
+                if (ImGui.SmallButton("Reset delays to defaults"))
                 {
                     var c = new Config();
                     P.config.SanctityDelay = c.SanctityDelay;
@@ -79,48 +67,6 @@ namespace DSREyeLocator
                 ImGui.DragInt("Delay since start of Death of the Heavens cast, ms", ref P.config.DeathDelay, 10, 0, 30000);
                 ImGuiEx.Text("   - Death of the Heavens's Gaze resolves at 34255 ms");
             }
-            ImGui.Separator();
-            ImGui.Checkbox("Test mode", ref P.config.Test);
-            ImGui.Separator();
-            if(Svc.ClientState.TerritoryType == 838)
-            {
-                if (OpcodeFound)
-                {
-                    ImGuiEx.Text(Environment.TickCount % 400 > 200?ImGuiColors.ParsedGreen:Vector4.Zero, "Opcode found and recorded!");
-                }
-                else
-                {
-                    ImGuiEx.Text(ImGuiColors.DalamudOrange, "Go forward until meteor hits the groung");
-                }
-            }
-            else
-            {
-                ImGuiEx.Text(ImGuiColors.DalamudYellow, "Enter Amaurot to enable opcode finder");
-            }
-            ImGui.Separator();
-            ImGuiEx.Text("Debug:");
-            ImGuiEx.Text($"Sanctity: {P.SanctityStartTime}/{P.IsSanctity()}");
-            ImGuiEx.Text($"Death: {P.DeathStartTime}/{P.IsDeath()}");
-            if(Svc.Targets.Target != null)
-            {
-                var angle = ConeHandler.GetAngleTo(Svc.Targets.Target.Position.ToVector2());
-                ImGuiEx.Text(ConeHandler.IsInCone(Svc.Targets.Target.Position.ToVector2())?ImGuiColors.DalamudRed:ImGuiColors.DalamudWhite, $"{angle}");
-                if(Svc.Targets.Target is Character c)
-                {
-                    ImGuiEx.Text($"{c.Address.As<FFXIVClientStructs.FFXIV.Client.Game.Character.Character>()->NameID}");
-                }
-            }
-            if (DalamudReflector.TryGetDalamudStartInfo(out var info))
-            {
-                ImGuiEx.TextCopy($"{info.GameVersion.ToString()}");
-            }
-        }
-
-        public override void OnClose()
-        {
-            P.config.Test = false;
-            Svc.PluginInterface.SavePluginConfig(P.config);
-            Notify.Success("Configuration saved");
         }
     }
 }

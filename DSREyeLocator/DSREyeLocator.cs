@@ -4,6 +4,7 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Network;
 using Dalamud.Logging;
 using Dalamud.Plugin;
+using DSREyeLocator.Gui;
 using ECommons.Automation;
 using ECommons.GameFunctions;
 using ECommons.MathHelpers;
@@ -167,7 +168,7 @@ namespace DSREyeLocator
             {
                 if (direction == NetworkMessageDirection.ZoneDown)
                 {
-                    if (Svc.ClientState.TerritoryType == 838 && configWindow.IsOpen && !configWindow.OpcodeFound)
+                    if (Svc.ClientState.TerritoryType == 838 && configWindow.IsOpen && !TabMainConfig.OpcodeFound)
                     {
                         var data = (FFXIVIpcMapEffect*)dataPtr;
                         //80030043, 00080004, 0003, 0000
@@ -176,7 +177,7 @@ namespace DSREyeLocator
                             && data->unk_8 == 0x03
                             && data->unk_12 == 0x0000)
                         {
-                            configWindow.OpcodeFound = true;
+                            TabMainConfig.OpcodeFound = true;
                             P.config.MapEventOpcode = opCode;
                             Svc.PluginInterface.SavePluginConfig(config);
                         }
