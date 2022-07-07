@@ -4,6 +4,7 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Network;
 using Dalamud.Logging;
 using Dalamud.Plugin;
+using DSREyeLocator.Core;
 using DSREyeLocator.Gui;
 using ECommons.Automation;
 using ECommons.GameFunctions;
@@ -54,17 +55,20 @@ namespace DSREyeLocator
                             }
                         });
                 }
+
+                Headmarker.Init();
             });
         }
 
         public void Dispose()
         {
-            ECommons.ECommons.Dispose();
             Svc.GameNetwork.NetworkMessage -= OnNetworkMessage;
             Svc.Framework.Update -= Tick;
             Svc.PluginInterface.UiBuilder.Draw -= ws.Draw;
             Svc.Condition.ConditionChange -= Condition_ConditionChange;
             Safe(overlayWindow.Dispose);
+            Safe(Headmarker.Dispose);
+            ECommons.ECommons.Dispose();
         }
 
         private void Tick(Framework framework)
@@ -76,6 +80,7 @@ namespace DSREyeLocator
                 {
                     FlamesTick();
                     EyeTick();
+                    ChainsResolver.ChainsTick();
                 });
             }
         }
@@ -91,6 +96,7 @@ namespace DSREyeLocator
                 else
                 {
                     PluginLog.Debug("Combat finished");
+                    Headmarker.HeadmarkerInfos.Clear();
                     if (FlamesResolved && ClearScheduler != null)
                     {
                         FlamesClearRequested = true;

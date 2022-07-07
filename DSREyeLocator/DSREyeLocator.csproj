@@ -67,6 +67,10 @@
 			<HintPath>$(DalamudLibPath)ImGuiScene.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
+		<Reference Include="Reloaded.Hooks.Definitions">
+			<HintPath>$(DalamudLibPath)Reloaded.Hooks.Definitions.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
 	</ItemGroup>
 
 	<ItemGroup>
