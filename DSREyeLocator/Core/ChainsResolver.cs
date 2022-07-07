@@ -10,10 +10,17 @@ namespace DSREyeLocator.Core
 {
     internal static class ChainsResolver
     {
+        static string[] ChainHeadmarkers = new string[]
+        {
+            "vfx/lockon/eff/r1fz_firechain_01x.avfx",
+            "vfx/lockon/eff/r1fz_firechain_02x.avfx",
+            "vfx/lockon/eff/r1fz_firechain_03x.avfx",
+            "vfx/lockon/eff/r1fz_firechain_04x.avfx"
+        };
 
         internal static void ChainsTick()
         {
-            if(TryFindSelfMarker(out var marker) && TryFindPartner(marker, out var partner))
+            if(TryFindSelfMarker(out var marker) && ChainHeadmarkers.Contains(marker) && TryFindPartner(marker, out var partner))
             {
                 Safe(delegate
                 {
