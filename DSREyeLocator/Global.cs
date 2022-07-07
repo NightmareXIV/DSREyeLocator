@@ -18,3 +18,5 @@ global using ECommons.ImGuiMethods;
 global using ECommons.Schedulers;
 global using static DSREyeLocator.DSREyeLocator;
 global using Dalamud.Game.ClientState.Conditions;
+global using static DSREyeLocator.Core.EyeResolver;
+global using static DSREyeLocator.Core.FlamesResolver;

@@ -25,5 +25,9 @@ namespace DSREyeLocator
         public int DeathDelay = 25000;
         public bool WrothFlamesOperational = false;
         public bool WrothFlames = false;
+        public bool FlamesOnlySelf = false;
+        public string FlamesSelfSpread = "/enemysign attack <me>";
+        public string FlamesSelfStack = "/enemysign bind <me>";
+        public string FlamesSelfNone = "/enemysign ignore <me>";
     }
 }
