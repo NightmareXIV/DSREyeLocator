@@ -35,7 +35,7 @@ namespace DSREyeLocator
         public override bool DrawConditions()
         {
             return P.config.EnableBanner && 
-                (P.config.Test || (Svc.ClientState.TerritoryType == 968 && ((P.IsSanctity() && Environment.TickCount64 > P.SanctityStartTimeDelay) || (P.IsDeath() && Environment.TickCount64 > P.DeathStartTimeDelay)) && P.EyesPositions.ContainsKey(P.EyePos)));
+                (P.config.Test || (Svc.ClientState.TerritoryType == 968 && ((IsSanctity() && Environment.TickCount64 > SanctityStartTimeDelay) || (IsDeath() && Environment.TickCount64 > DeathStartTimeDelay)) && EyesPositions.ContainsKey(EyePos)));
         }
 
         public override void Draw()

@@ -40,8 +40,8 @@ namespace DSREyeLocator.Gui
             }
             ImGui.Separator();
             ImGuiEx.Text("Debug:");
-            ImGuiEx.Text($"Sanctity: {P.SanctityStartTime}/{P.IsSanctity()}");
-            ImGuiEx.Text($"Death: {P.DeathStartTime}/{P.IsDeath()}");
+            ImGuiEx.Text($"Sanctity: {SanctityStartTime}/{IsSanctity()}");
+            ImGuiEx.Text($"Death: {DeathStartTime}/{IsDeath()}");
             if (Svc.Targets.Target != null)
             {
                 var angle = ConeHandler.GetAngleTo(Svc.Targets.Target.Position.ToVector2());
