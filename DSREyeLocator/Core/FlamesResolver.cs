@@ -29,14 +29,17 @@ namespace DSREyeLocator.Core
                 {
                     if (Svc.ClientState.LocalPlayer.StatusList.Any(x => x.StatusId == SpreadingFlames))
                     {
+                        DuoLog.Debug("Flames: spread self");
                         commands.Add(P.config.FlamesSelfSpread);
                     }
                     else if (Svc.ClientState.LocalPlayer.StatusList.Any(x => x.StatusId == EntangledFlames))
                     {
+                        DuoLog.Debug("Flames: stack self");
                         commands.Add(P.config.FlamesSelfStack);
                     }
                     else
                     {
+                        DuoLog.Debug("Flames: none self");
                         commands.Add(P.config.FlamesSelfNone);
                     }
                 }
@@ -45,11 +48,11 @@ namespace DSREyeLocator.Core
                     Queue<string> EngangledCommands = new(new string[]
                     {
                     "/enemysign bind1",
-                    "/enemysign ignore1",
+                    "/enemysign bind2",
                     });
                     Queue<string> NoneCommands = new(new string[]
                     {
-                    "/enemysign bind2",
+                    "/enemysign ignore1",
                     "/enemysign ignore2",
                     });
                     Queue<string> SpreadingCommands = new(new string[]
@@ -59,28 +62,35 @@ namespace DSREyeLocator.Core
                     "/enemysign attack3",
                     "/enemysign attack4",
                     });
-                    foreach (var x in Svc.Party.Where(x => x.GameObject is PlayerCharacter).Select(x => (PlayerCharacter)x.GameObject))
+                    foreach (var s in Svc.Party)
                     {
-                        PluginLog.Information($"Player {x.Name}");
-                        if (x.TryGetPlaceholder(out var num))
+                        if (s.GameObject is PlayerCharacter x)
                         {
-                            PluginLog.Information($"Player {x.Name} placeholder {num} statuses {x.StatusList.Select(s => s.StatusId.ToString()).Join(", ")}");
-                            if (x.StatusList.Any(s => s.StatusId == SpreadingFlames))
+                            DuoLog.Debug($"Player {x.Name}");
+                            if (x.TryGetPlaceholder(out var num))
                             {
-                                commands.Add($"{SpreadingCommands.Dequeue()} <{num}>");
-                            }
-                            else if (x.StatusList.Any(s => s.StatusId == EntangledFlames))
-                            {
-                                commands.Add($"{EngangledCommands.Dequeue()} <{num}>");
+                                DuoLog.Debug($"Player {x.Name} placeholder {num} statuses {x.StatusList.Select(s => s.StatusId.ToString()).Join(", ")}");
+                                if (x.StatusList.Any(s => s.StatusId == SpreadingFlames))
+                                {
+                                    commands.Add($"{SpreadingCommands.Dequeue()} <{num}>");
+                                }
+                                else if (x.StatusList.Any(s => s.StatusId == EntangledFlames))
+                                {
+                                    commands.Add($"{EngangledCommands.Dequeue()} <{num}>");
+                                }
+                                else
+                                {
+                                    commands.Add($"{NoneCommands.Dequeue()} <{num}>");
+                                }
                             }
                             else
                             {
-                                commands.Add($"{NoneCommands.Dequeue()} <{num}>");
+                                PluginLog.Error($"Failed to resolve placeholder for {x.Name}");
                             }
                         }
                         else
                         {
-                            PluginLog.Error($"Failed to resolve placeholder for {x.Name}");
+                            DuoLog.Warning($"Not a PC in party {s.GameObject}");
                         }
                     }
                 }
@@ -90,12 +100,12 @@ namespace DSREyeLocator.Core
                 }
                 else
                 {
-                    Svc.Chat.Print("=== Wroth flames ===");
+                    DuoLog.Information("=== Wroth flames ===");
                     foreach (var x in commands)
                     {
-                        Svc.Chat.Print(x);
+                        DuoLog.Information(x);
                     }
-                    Svc.Chat.Print("====================");
+                    DuoLog.Information("====================");
                 }
                 ClearScheduler?.Dispose();
                 ClearScheduler = new TickScheduler(ClearMarkers, 30000);
@@ -121,12 +131,12 @@ namespace DSREyeLocator.Core
             }
             else
             {
-                Svc.Chat.Print("=== Wroth flames ===");
+                DuoLog.Information("=== Wroth flames ===");
                 foreach (var x in l)
                 {
-                    Svc.Chat.Print(x);
+                    DuoLog.Information(x);
                 }
-                Svc.Chat.Print("====================");
+                DuoLog.Information("====================");
             }
             ClearScheduler?.Dispose();
         }

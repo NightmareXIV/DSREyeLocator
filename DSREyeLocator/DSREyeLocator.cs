@@ -29,6 +29,12 @@ namespace DSREyeLocator
         {
             P = this;
             ECommons.ECommons.Init(pi, Module.ObjectFunctions, Module.DalamudReflector);
+            /*DuoLog.Verbose("Verbose");
+            DuoLog.Debug("Debug");
+            DuoLog.Information("Information");
+            DuoLog.Warning("Warning");
+            DuoLog.Error("Error");
+            DuoLog.Fatal("Fatal");*/
             new TickScheduler(delegate
             {
                 config = Svc.PluginInterface.GetPluginConfig() as Config ?? new();
