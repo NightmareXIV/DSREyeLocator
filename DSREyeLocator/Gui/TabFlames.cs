@@ -10,7 +10,8 @@ namespace DSREyeLocator.Gui
     {
         internal static void Draw()
         {
-            ImGui.Checkbox("Enable Wroth Flames automarker", ref P.config.WrothFlames);
+            ImGui.Checkbox("Enable module", ref P.config.WrothFlames);
+            if (!P.config.WrothFlames) return;
             ImGui.Checkbox("Operational mode", ref P.config.WrothFlamesOperational);
             ImGuiEx.Text("     will print would-be executed macro commands into chat if unchecked");
             ImGui.Checkbox("Self only", ref P.config.FlamesOnlySelf);

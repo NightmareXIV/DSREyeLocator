@@ -52,7 +52,7 @@ namespace DSREyeLocator.Core
                             Svc.PluginInterface.SavePluginConfig(P.config);
                         }
                     }
-                    if (Svc.ClientState.TerritoryType == DSRTerritory || P.config.Test)
+                    if (P.config.EyeEnabled && (Svc.ClientState.TerritoryType == DSRTerritory || P.config.Test))
                     {
                         var data = (FFXIVIpcMapEffect*)dataPtr;
                         if (opCode == P.config.MapEventOpcode)

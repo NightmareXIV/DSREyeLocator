@@ -25,7 +25,7 @@ namespace DSREyeLocator.Core
                 Safe(delegate
                 {
                     SplatoonManager.DrawLine(SplatoonManager.Get(), Svc.ClientState.LocalPlayer.Position,
-                        partner.Position, ImGuiColors.DalamudRed.ToUint(), 2);
+                        partner.Position, P.config.ChainColor, P.config.ChainThickness);
                 });
             }
         }

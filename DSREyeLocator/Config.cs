@@ -10,6 +10,8 @@ namespace DSREyeLocator
     internal class Config : IPluginConfiguration
     {
         public int Version { get; set; } = 1;
+
+        public bool EyeEnabled = true;
         public uint MapEventOpcode = 0x2E0;
         public int VerticalOffset = 100;
         public int HorizontalOffset = 0;
@@ -23,6 +25,11 @@ namespace DSREyeLocator
         public bool Delay = true;
         public int SanctityDelay = 11000;
         public int DeathDelay = 25000;
+
+        public bool ChainEnabled = true;
+        public float ChainThickness = 2f;
+        public uint ChainColor = 0xC80000FF;
+
         public bool WrothFlamesOperational = false;
         public bool WrothFlames = false;
         public bool FlamesOnlySelf = false;

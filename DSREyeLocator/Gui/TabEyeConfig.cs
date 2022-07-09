@@ -12,6 +12,8 @@ namespace DSREyeLocator.Gui
     {
         internal static void Draw()
         {
+            ImGui.Checkbox("Enable module", ref P.config.EyeEnabled);
+            if (!P.config.EyeEnabled) return;
             if (ImGui.Checkbox("Enable tether to eye and Thordan (requires Splatoon)", ref P.config.EnableTether))
             {
                 if (P.config.EnableTether && !DalamudReflector.TryGetDalamudPlugin("Splatoon", out _))

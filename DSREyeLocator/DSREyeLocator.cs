@@ -84,9 +84,9 @@ namespace DSREyeLocator
             {
                 Safe(delegate
                 {
-                    FlamesTick();
-                    EyeTick();
-                    ChainsResolver.ChainsTick();
+                    if(P.config.EyeEnabled) EyeTick();
+                    if(P.config.ChainEnabled) ChainsResolver.ChainsTick();
+                    if (P.config.WrothFlames) FlamesTick();
                     if (P.config.TargetEnabled) DDResolver.Tick();
                 });
             }
@@ -104,7 +104,7 @@ namespace DSREyeLocator
                 {
                     PluginLog.Debug("Combat finished");
                     Headmarker.HeadmarkerInfos.Clear();
-                    if (FlamesResolved && ClearScheduler != null)
+                    if (P.config.WrothFlames && FlamesResolved && ClearScheduler != null)
                     {
                         FlamesClearRequested = true;
                     }
