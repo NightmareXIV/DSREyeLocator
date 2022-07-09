@@ -29,5 +29,10 @@ namespace DSREyeLocator
         public string FlamesSelfSpread = "/enemysign attack <me>";
         public string FlamesSelfStack = "/enemysign bind <me>";
         public string FlamesSelfNone = "/enemysign ignore <me>";
+
+        public bool TargetEnabled = false;
+        public Dragon MyDragon = Dragon.Nidhogg;
+        public float SwitchTreshold = 2.8f;
+        public bool NoDamageAkhAfah = true;
     }
 }

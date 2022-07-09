@@ -87,6 +87,7 @@ namespace DSREyeLocator
                     FlamesTick();
                     EyeTick();
                     ChainsResolver.ChainsTick();
+                    if (P.config.TargetEnabled) DDResolver.Tick();
                 });
             }
         }

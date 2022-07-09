@@ -20,8 +20,8 @@ namespace DSREyeLocator.Core
         {
             if (!FlamesResolved && Svc.Party
                 .Where(x => x.GameObject is PlayerCharacter)
-                .All(x => ((PlayerCharacter)x.GameObject)
-                .StatusList.Count(x => x.StatusId == EntangledFlames || x.StatusId == SpreadingFlames) == 6))
+                .Select(x => ((PlayerCharacter)x.GameObject).StatusList)
+                .Count(x => x.Any(s => s.StatusId == EntangledFlames || s.StatusId == SpreadingFlames)) == 6)
             {
                 FlamesResolved = true;
                 List<string> commands = new();

@@ -23,6 +23,7 @@ namespace DSREyeLocator.Gui
                 ("General", TabMainConfig.Draw, null, true),
                 ("Eye locator", TabEyeConfig.Draw, null, true),
                 ("Flames automarker", TabFlames.Draw, null, true),
+                ("TargetSwitcher", TabTargetSwitcher.Draw, null, true),
                 ("Contribute", TabContribute.Draw, ImGuiColors.DalamudYellow, true)
                 );
         }
