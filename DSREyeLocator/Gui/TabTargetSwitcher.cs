@@ -10,6 +10,7 @@ namespace DSREyeLocator.Gui
     {
         internal static void Draw()
         {
+            ImGuiEx.TextWrapped(ImGuiColors.DalamudRed, "This module is untested and not completed yet. It may not work or work unexpectedly. Additionally, it is only intended for ranged dps. Proceed with caution.");
             ImGui.Checkbox("Enable module", ref P.config.TargetEnabled);
             if (!P.config.TargetEnabled) return;
             ImGuiEx.EnumCombo("My target", ref P.config.MyDragon);

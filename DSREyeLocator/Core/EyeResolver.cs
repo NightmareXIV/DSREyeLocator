@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Network;
+using Dalamud.Memory;
 using DSREyeLocator.Gui;
 using ECommons.GameFunctions;
 using ECommons.MathHelpers;
@@ -37,7 +38,17 @@ namespace DSREyeLocator.Core
             Safe(delegate
             {
                 if (direction == NetworkMessageDirection.ZoneDown)
-{
+                {
+                    if (P.config.MapEffectDbg && opCode == P.config.MapEventOpcode)
+                    {
+                        var list = P.config.MapEffectLog.Last();
+                        if(list.TerritoryType == Svc.ClientState.TerritoryType)
+                        {
+                            var header = MemoryHelper.ReadRaw(dataPtr - 16, 16);
+                            list.structs.Add((header, *(FFXIVIpcMapEffect*)dataPtr));
+                        }
+                        Svc.PluginInterface.SavePluginConfig(P.config);
+                    }
                     if (Svc.ClientState.TerritoryType == 838 && P.configWindow.IsOpen && !TabMainConfig.OpcodeFound)
                     {
                         var data = (FFXIVIpcMapEffect*)dataPtr;
@@ -45,20 +56,17 @@ namespace DSREyeLocator.Core
                         if (data->InstanceContentID == 0x80030043
                             && data->unk_4 == 0x00080004
                             && data->unk_8 == 0x03
-                            && data->unk_12 == 0x0000)
+                            && data->unk_12 == 0x00)
                         {
                             TabMainConfig.OpcodeFound = true;
                             P.config.MapEventOpcode = opCode;
                             Svc.PluginInterface.SavePluginConfig(P.config);
                         }
                     }
-                    if (P.config.EyeEnabled && (Svc.ClientState.TerritoryType == DSRTerritory || P.config.Test))
+                    if (P.config.EyeEnabled && (Svc.ClientState.TerritoryType == DSRTerritory || P.config.Test) && opCode == P.config.MapEventOpcode)
                     {
                         var data = (FFXIVIpcMapEffect*)dataPtr;
-                        if (opCode == P.config.MapEventOpcode)
-                        {
-                            PluginLog.Debug($"MapEvent: {data->InstanceContentID:X8}, {data->unk_4:X8}, {data->unk_8:X2}, {data->unk_10:X2}, {data->unk_12:X4}");
-                        }
+                        PluginLog.Debug($"MapEvent: {data->InstanceContentID:X8}, {data->unk_4:X8}, {data->unk_8:X2}, {data->unk_10:X2}, {data->unk_12:X4}");
                         if (IsSanctity() || IsDeath())
                         {
                             if (data->unk_4 == 0x00020001)

@@ -38,6 +38,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="ExposedObject" Version="2.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\..\ECommons\ECommons\ECommons.csproj" />
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>

@@ -1,4 +1,5 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+using ECommons.Automation;
 using ECommons.GameFunctions;
 using System;
 using System.Collections.Generic;
@@ -96,7 +97,7 @@ namespace DSREyeLocator.Core
                 }
                 if (P.config.WrothFlamesOperational)
                 {
-                    //MacroManager.Execute(commands);
+                    MacroManager.Execute(commands);
                 }
                 else
                 {
@@ -127,7 +128,7 @@ namespace DSREyeLocator.Core
             }
             if (P.config.WrothFlamesOperational)
             {
-                //MacroManager.Execute(l);
+                MacroManager.Execute(l);
             }
             else
             {

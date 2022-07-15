@@ -28,6 +28,9 @@ namespace DSREyeLocator
         public byte unk_10;
 
         [FieldOffset(12)]
-        public ushort unk_12;
+        public byte unk_12;
+
+        [FieldOffset(14)]
+        public byte unk_14;
     }
 }

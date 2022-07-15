@@ -11,6 +11,7 @@ using ECommons.GameFunctions;
 using ECommons.MathHelpers;
 using ECommons.Opcodes;
 using ECommons.Reflection;
+using Newtonsoft.Json;
 using System;
 
 namespace DSREyeLocator
@@ -63,23 +64,43 @@ namespace DSREyeLocator
                 }
 
                 Headmarker.Init();
+                new ChangelogWindow(config, 1, delegate
+                {
+                    ImGuiEx.Text("DSR Eye Locator has been renamed into DSR Toolbox and contains few other functions \n" +
+                        "to help with DSR. " +
+                        "\n\nI may add some other in future as I progress though the fight/do reclears of it." +
+                        "\nBy default only eye locator is enabled, matching previous behavior of the plugin.  ");
+                });
+                Svc.ClientState.TerritoryChanged += TerrChanged;
+                Svc.Commands.AddHandler("/eye", new(delegate { configWindow.IsOpen = true; }) { HelpMessage = "Open configuration" });
             });
         }
 
         public void Dispose()
         {
+            Svc.Commands.RemoveHandler("/eye");
             Svc.GameNetwork.NetworkMessage -= OnNetworkMessage;
             Svc.Framework.Update -= Tick;
             Svc.PluginInterface.UiBuilder.Draw -= ws.Draw;
             Svc.Condition.ConditionChange -= Condition_ConditionChange;
             Safe(overlayWindow.Dispose);
             Safe(Headmarker.Dispose);
+            Svc.ClientState.TerritoryChanged -= TerrChanged;
             ECommons.ECommons.Dispose();
+        }
+
+        private void TerrChanged(object sender, ushort e)
+        {
+            if (P.config.MapEffectDbg)
+            {
+                P.config.MapEffectLog.RemoveAll(x => x.structs.Count == 0);
+                P.config.MapEffectLog.Add((e, new()));
+            }
         }
 
         private void Tick(Framework framework)
         {
-            if (Svc.ClientState.LocalPlayer == null) return;
+            if (Svc.ClientState.LocalPlayer == null || Svc.Condition[ConditionFlag.DutyRecorderPlayback]) return;
             if(Svc.ClientState.TerritoryType == DSRTerritory || P.config.Test)
             {
                 Safe(delegate
@@ -104,9 +125,12 @@ namespace DSREyeLocator
                 {
                     PluginLog.Debug("Combat finished");
                     Headmarker.HeadmarkerInfos.Clear();
-                    if (P.config.WrothFlames && FlamesResolved && ClearScheduler != null)
+                    if (P.config.WrothFlames)
                     {
-                        FlamesClearRequested = true;
+                        if (FlamesResolved && ClearScheduler != null)
+                        {
+                            FlamesClearRequested = true;
+                        }
                     }
                 }
                 FlamesResolved = false;

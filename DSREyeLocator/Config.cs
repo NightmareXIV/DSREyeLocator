@@ -26,7 +26,7 @@ namespace DSREyeLocator
         public int SanctityDelay = 11000;
         public int DeathDelay = 25000;
 
-        public bool ChainEnabled = true;
+        public bool ChainEnabled = false;
         public float ChainThickness = 2f;
         public uint ChainColor = 0xC80000FF;
 
@@ -41,5 +41,9 @@ namespace DSREyeLocator
         public Dragon MyDragon = Dragon.Nidhogg;
         public float SwitchTreshold = 2.8f;
         public bool NoDamageAkhAfah = true;
+        public int ChangelogWindowVer = 0;
+
+        public bool MapEffectDbg = false;
+        public List<(uint TerritoryType, List<(byte[] header, FFXIVIpcMapEffect st)> structs)> MapEffectLog = new();
     }
 }

@@ -34,7 +34,7 @@ namespace DSREyeLocator.Core
         {
             foreach(var x in Headmarker.HeadmarkerInfos)
             {
-                if(x.ObjectID == Svc.ClientState.LocalPlayer.ObjectId && x.AppearedAt + 10000 > Environment.TickCount64)
+                if(x.ObjectID == Svc.ClientState.LocalPlayer.ObjectId && x.AppearedAt + 7000 > Environment.TickCount64)
                 {
                     selfPath = x.Path;
                     return true;

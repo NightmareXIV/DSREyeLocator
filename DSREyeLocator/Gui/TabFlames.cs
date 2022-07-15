@@ -10,6 +10,7 @@ namespace DSREyeLocator.Gui
     {
         internal static void Draw()
         {
+            ImGuiEx.TextWrapped(ImGuiColors.DalamudOrange, "This module had very little testing. It may not work or have problems. ");
             ImGui.Checkbox("Enable module", ref P.config.WrothFlames);
             if (!P.config.WrothFlames) return;
             ImGui.Checkbox("Operational mode", ref P.config.WrothFlamesOperational);
