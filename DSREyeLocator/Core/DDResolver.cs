@@ -19,7 +19,7 @@ namespace DSREyeLocator.Core
             {
                 var nidPercent = ((float)nid.CurrentHp / (float)nid.MaxHp) * 100f;
                 var hraePercent = ((float)hrae.CurrentHp / (float)hrae.MaxHp) * 100f;
-                if (P.config.NoDamageAkhAfah && nid.IsCasting && nid.CastActionId == AkhAfah)
+                if (P.config.NoDamageAkhAfah && nid.IsCasting && nid.CastActionId == AkhAfah && nid.CurrentCastTime > 3)
                 {
                     if(Svc.Targets.Target != null)
                     {
@@ -28,25 +28,36 @@ namespace DSREyeLocator.Core
                 }
                 else
                 {
+                    var th = P.config.SwitchTreshold;
+                    if(nid.IsCasting && nid.CastActionId == AkhAfah)
+                    {
+                        th = 2;
+                    }
                     //attack nidhogg if nid is higher
-                    if(nidPercent - hraePercent > P.config.SwitchTreshold && Svc.Targets.Target?.Address != nid.Address)
+                    if(nidPercent - hraePercent > th && Svc.Targets.Target?.Address != nid.Address && nid.H2HRange() < 25f)
                     {
                         SetTarget(nid, 5000);
                     }
-                    else if(hraePercent - nidPercent > P.config.SwitchTreshold && Svc.Targets.Target?.Address != hrae.Address)
+                    else if(hraePercent - nidPercent > th && Svc.Targets.Target?.Address != hrae.Address && hrae.H2HRange() < 25f)
                     {
                         SetTarget(hrae, 5000);
                     }
-                    else if(P.config.MyDragon == Dragon.Nidhogg && Svc.Targets.Target?.Address != nid.Address)
+                    else if(P.config.MyDragon == Dragon.Nidhogg && Svc.Targets.Target?.Address != nid.Address && nid.H2HRange() < 25f)
                     {
                         SetTarget(nid);
                     }
-                    else if (P.config.MyDragon == Dragon.Hraesvelgr && Svc.Targets.Target?.Address != hrae.Address)
+                    else if (P.config.MyDragon == Dragon.Hraesvelgr && Svc.Targets.Target?.Address != hrae.Address && hrae.H2HRange() < 25f)
                     {
                         SetTarget(hrae);
                     }
                 }
             }
+        }
+
+        static float H2HRange(this GameObject target)
+        {
+            return Vector3.Distance(target.Position, Svc.ClientState.LocalPlayer.Position) - Svc.ClientState.LocalPlayer.HitboxRadius
+                - target.HitboxRadius;
         }
 
 

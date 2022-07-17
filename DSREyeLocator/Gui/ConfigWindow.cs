@@ -15,6 +15,11 @@ namespace DSREyeLocator.Gui
 
         public ConfigWindow() : base($"{P.Name} configuration")
         {
+            this.SizeConstraints = new()
+            {
+                MaximumSize = new(9999, 9999),
+                MinimumSize = new(400, 200)
+            };
         }
 
         public override void Draw()

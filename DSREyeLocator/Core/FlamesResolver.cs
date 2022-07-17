@@ -48,20 +48,20 @@ namespace DSREyeLocator.Core
                 {
                     Queue<string> EngangledCommands = new(new string[]
                     {
-                    "/enemysign bind1",
-                    "/enemysign bind2",
+                    "/marking bind1",
+                    "/marking bind2",
                     });
                     Queue<string> NoneCommands = new(new string[]
                     {
-                    "/enemysign ignore1",
-                    "/enemysign ignore2",
+                    "/marking ignore1",
+                    "/marking ignore2",
                     });
                     Queue<string> SpreadingCommands = new(new string[]
                     {
-                    "/enemysign attack1",
-                    "/enemysign attack2",
-                    "/enemysign attack3",
-                    "/enemysign attack4",
+                    "/marking attack1",
+                    "/marking attack2",
+                    "/marking attack3",
+                    "/marking attack4",
                     });
                     foreach (var s in Svc.Party)
                     {
@@ -117,13 +117,13 @@ namespace DSREyeLocator.Core
             List<string> l = new();
             if (P.config.FlamesOnlySelf)
             {
-                l.Add($"/enemysign off <me>");
+                l.Add($"/marking off <me>");
             }
             else
             {
                 for (var i = 1; i <= 8; i++)
                 {
-                    l.Add($"/enemysign off <{i}>");
+                    l.Add($"/marking off <{i}>");
                 }
             }
             if (P.config.WrothFlamesOperational)

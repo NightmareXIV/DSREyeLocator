@@ -33,9 +33,9 @@ namespace DSREyeLocator
         public bool WrothFlamesOperational = false;
         public bool WrothFlames = false;
         public bool FlamesOnlySelf = false;
-        public string FlamesSelfSpread = "/enemysign attack <me>";
-        public string FlamesSelfStack = "/enemysign bind <me>";
-        public string FlamesSelfNone = "/enemysign ignore <me>";
+        public string FlamesSelfSpread = "/marking attack <me>";
+        public string FlamesSelfStack = "/marking bind <me>";
+        public string FlamesSelfNone = "/marking ignore <me>";
 
         public bool TargetEnabled = false;
         public Dragon MyDragon = Dragon.Nidhogg;
