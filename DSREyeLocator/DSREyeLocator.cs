@@ -25,6 +25,7 @@ namespace DSREyeLocator
         internal ConfigWindow configWindow;
         internal OverlayWindow overlayWindow;
         internal Config config;
+        internal Chat chat;
 
         public DSREyeLocator(DalamudPluginInterface pi)
         {
@@ -73,6 +74,7 @@ namespace DSREyeLocator
                 });
                 Svc.ClientState.TerritoryChanged += TerrChanged;
                 Svc.Commands.AddHandler("/eye", new(delegate { configWindow.IsOpen = true; }) { HelpMessage = "Open configuration" });
+                chat = new();
             });
         }
 

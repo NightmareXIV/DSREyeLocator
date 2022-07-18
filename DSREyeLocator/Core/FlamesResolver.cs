@@ -16,6 +16,8 @@ namespace DSREyeLocator.Core
         internal static bool FlamesResolved = false;
         internal static TickScheduler ClearScheduler;
         internal static bool FlamesClearRequested = false;
+        internal static Queue<string> ChatCommands = new();
+        internal static long NextChatCommandAt = 0;
 
         internal static void ResolveFlames()
         {
@@ -25,6 +27,7 @@ namespace DSREyeLocator.Core
                 .Count(x => x.Any(s => s.StatusId == EntangledFlames || s.StatusId == SpreadingFlames)) == 6)
             {
                 FlamesResolved = true;
+                NextChatCommandAt = Environment.TickCount64 + 1000;
                 List<string> commands = new();
                 if (P.config.FlamesOnlySelf)
                 {
@@ -103,7 +106,17 @@ namespace DSREyeLocator.Core
                 }
                 if (P.config.WrothFlamesOperational)
                 {
-                    MacroManager.Execute(commands);
+                    if (P.config.FlamesEmulateDelay)
+                    {
+                        foreach(var x in commands)
+                        {
+                            ChatCommands.Enqueue(x);
+                        }
+                    }
+                    else
+                    {
+                        MacroManager.Execute(commands);
+                    }
                 }
                 PluginLog.Information("=== Wroth flames ===");
                 foreach (var x in commands)
@@ -144,6 +157,24 @@ namespace DSREyeLocator.Core
 
         internal static void FlamesTick()
         {
+            if (!Svc.Condition[ConditionFlag.InCombat])
+            {
+                ChatCommands.Clear();
+            }
+            if(Environment.TickCount64 > NextChatCommandAt && ChatCommands.TryDequeue(out var command))
+            {
+                NextChatCommandAt = Environment.TickCount64 + new Random().Next(250, 500);
+                if (P.config.WrothFlamesOperational)
+                {
+                    PluginLog.Information($"Sending chat command: {command}");
+                    P.chat.SendMessage(command);
+                }
+                else
+                {
+                    PluginLog.Information($"Sending fake chat command: {command}");
+                    P.chat.SendMessage($"/echo {command}");
+                }
+            }
             if (FlamesClearRequested)
             {
                 if (!Svc.Condition[ConditionFlag.Unconscious] &&
