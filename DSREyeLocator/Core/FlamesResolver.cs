@@ -67,21 +67,27 @@ namespace DSREyeLocator.Core
                     {
                         if (s.GameObject is PlayerCharacter x)
                         {
-                            DuoLog.Debug($"Player {x.Name}");
+                            PluginLog.Information($"Player {x.Name}");
                             if (x.TryGetPlaceholder(out var num))
                             {
-                                DuoLog.Debug($"Player {x.Name} placeholder {num} statuses {x.StatusList.Select(s => s.StatusId.ToString()).Join(", ")}");
+                                PluginLog.Information($"-- Player {x.Name} placeholder {num} statuses {x.StatusList.Select(s => s.StatusId.ToString()).Join(", ")}");
                                 if (x.StatusList.Any(s => s.StatusId == SpreadingFlames))
                                 {
-                                    commands.Add($"{SpreadingCommands.Dequeue()} <{num}>");
+                                    var cmd = SpreadingCommands.Dequeue();
+                                    commands.Add($"{cmd} <{num}>");
+                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}>");
                                 }
                                 else if (x.StatusList.Any(s => s.StatusId == EntangledFlames))
                                 {
-                                    commands.Add($"{EngangledCommands.Dequeue()} <{num}>");
+                                    var cmd = EngangledCommands.Dequeue();
+                                    commands.Add($"{cmd} <{num}>");
+                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}>");
                                 }
                                 else
                                 {
-                                    commands.Add($"{NoneCommands.Dequeue()} <{num}>");
+                                    var cmd = NoneCommands.Dequeue();
+                                    commands.Add($"{cmd} <{num}>");
+                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}>");
                                 }
                             }
                             else
@@ -99,15 +105,12 @@ namespace DSREyeLocator.Core
                 {
                     MacroManager.Execute(commands);
                 }
-                else
+                PluginLog.Information("=== Wroth flames ===");
+                foreach (var x in commands)
                 {
-                    DuoLog.Information("=== Wroth flames ===");
-                    foreach (var x in commands)
-                    {
-                        DuoLog.Information(x);
-                    }
-                    DuoLog.Information("====================");
+                    PluginLog.Information(x);
                 }
+                PluginLog.Information("====================");
                 ClearScheduler?.Dispose();
                 ClearScheduler = new TickScheduler(ClearMarkers, 30000);
             }
@@ -130,15 +133,12 @@ namespace DSREyeLocator.Core
             {
                 MacroManager.Execute(l);
             }
-            else
+            PluginLog.Information("=== Wroth flames ===");
+            foreach (var x in l)
             {
-                DuoLog.Information("=== Wroth flames ===");
-                foreach (var x in l)
-                {
-                    DuoLog.Information(x);
-                }
-                DuoLog.Information("====================");
+                PluginLog.Information(x);
             }
+            PluginLog.Information("====================");
             ClearScheduler?.Dispose();
         }
 
