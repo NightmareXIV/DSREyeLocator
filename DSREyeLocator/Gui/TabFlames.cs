@@ -12,11 +12,30 @@ namespace DSREyeLocator.Gui
     {
         internal static void Draw()
         {
-            ImGuiEx.TextWrapped(ImGuiColors.DalamudOrange, "This module had very little testing. It may not work or have problems. ");
+            //ImGuiEx.TextWrapped(ImGuiColors.DalamudOrange, "This module had very little testing. It may not work or have problems. ");
             ImGui.Checkbox("Enable module", ref P.config.WrothFlames);
             if (!P.config.WrothFlames) return;
             ImGui.Checkbox("Operational mode", ref P.config.WrothFlamesOperational);
             ImGuiEx.Text("     will print would-be executed macro commands into chat if unchecked");
+            if (P.config.WrothFlamesOperational)
+            {
+                ImGuiEx.Text("Test:");
+                ImGui.SameLine();
+                if (ImGui.Button("attack marker"))
+                {
+                    P.chat.SendMessage($"/marking {FlamesResolver.GetLocalizedAttack()}1 <me>");
+                }
+                ImGui.SameLine();
+                if (ImGui.Button("bind marker"))
+                {
+                    P.chat.SendMessage($"/marking {FlamesResolver.GetLocalizedBind()}1 <me>");
+                }
+                ImGui.SameLine();
+                if (ImGui.Button("ignore marker"))
+                {
+                    P.chat.SendMessage($"/marking {FlamesResolver.GetLocalizedIgnore()}1 <me>");
+                }
+            }
             ImGui.Checkbox("Add random delay between markings (recommended)", ref P.config.FlamesEmulateDelay);
             if (P.config.FlamesEmulateDelay)
             {

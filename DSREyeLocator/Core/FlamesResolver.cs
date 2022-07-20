@@ -1,4 +1,5 @@
-﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+﻿using Dalamud;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using ECommons.Automation;
 using ECommons.GameFunctions;
 using System;
@@ -51,20 +52,20 @@ namespace DSREyeLocator.Core
                 {
                     Queue<string> EngangledCommands = new(new string[]
                     {
-                    "/marking bind1",
-                    "/marking bind2",
+                    $"/marking {GetLocalizedBind()}1",
+                    $"/marking {GetLocalizedBind()}2",
                     });
                     Queue<string> NoneCommands = new(new string[]
                     {
-                    "/marking ignore1",
-                    "/marking ignore2",
+                    $"/marking {GetLocalizedIgnore()}1",
+                    $"/marking {GetLocalizedIgnore()}2",
                     });
                     Queue<string> SpreadingCommands = new(new string[]
                     {
-                    "/marking attack1",
-                    "/marking attack2",
-                    "/marking attack3",
-                    "/marking attack4",
+                    $"/marking {GetLocalizedAttack()}1",
+                    $"/marking {GetLocalizedAttack()}2",
+                    $"/marking {GetLocalizedAttack()}3",
+                    $"/marking {GetLocalizedAttack()}4",
                     });
                     foreach (var s in Svc.Party)
                     {
@@ -153,6 +154,66 @@ namespace DSREyeLocator.Core
             }
             PluginLog.Information("====================");
             ClearScheduler?.Dispose();
+        }
+
+        internal static string GetLocalizedAttack()
+        {
+            if (Svc.Data.Language == ClientLanguage.French)
+            {
+                return "attaque";
+            }
+            else if (Svc.Data.Language == ClientLanguage.German)
+            {
+                return "att";
+            }
+            else if (Svc.Data.Language == ClientLanguage.Japanese)
+            {
+                return "attack";
+            }
+            else
+            {
+                return "attack";
+            }
+        }
+
+        internal static string GetLocalizedBind()
+        {
+            if (Svc.Data.Language == ClientLanguage.French)
+            {
+                return "entrave";
+            }
+            else if (Svc.Data.Language == ClientLanguage.German)
+            {
+                return "bind";
+            }
+            else if (Svc.Data.Language == ClientLanguage.Japanese)
+            {
+                return "bind";
+            }
+            else
+            {
+                return "bind";
+            }
+        }
+
+        internal static string GetLocalizedIgnore()
+        {
+            if (Svc.Data.Language == ClientLanguage.French)
+            {
+                return "interdit";
+            }
+            else if (Svc.Data.Language == ClientLanguage.German)
+            {
+                return "ignor";
+            }
+            else if (Svc.Data.Language == ClientLanguage.Japanese)
+            {
+                return "stop";
+            }
+            else
+            {
+                return "ignore";
+            }
         }
 
         internal static void FlamesTick()
