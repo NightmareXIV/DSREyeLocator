@@ -62,6 +62,12 @@ namespace DSREyeLocator.Gui
                 ImGui.InputText("Stack command", ref P.config.FlamesSelfStack, 100);
                 ImGui.InputText("None command", ref P.config.FlamesSelfNone, 100);
             }
+            else
+            {
+                ImGui.Checkbox("Mark people with stack debuff", ref P.config.MarkStacks);
+                ImGui.Checkbox("Mark people with spread debuff", ref P.config.MarkSpreads);
+                ImGui.Checkbox("Mark people without debuff", ref P.config.MarkNones);
+            }
         }
     }
 }

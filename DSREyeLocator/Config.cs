@@ -37,6 +37,9 @@ namespace DSREyeLocator
         public string FlamesSelfStack = "/marking bind <me>";
         public string FlamesSelfNone = "/marking ignore <me>";
         public bool FlamesEmulateDelay = true;
+        public bool MarkSpreads = true;
+        public bool MarkStacks = true;
+        public bool MarkNones = true;
 
         public bool TargetEnabled = false;
         public Dragon MyDragon = Dragon.Nidhogg;

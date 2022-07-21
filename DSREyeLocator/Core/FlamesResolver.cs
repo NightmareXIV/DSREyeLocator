@@ -78,20 +78,20 @@ namespace DSREyeLocator.Core
                                 if (x.StatusList.Any(s => s.StatusId == SpreadingFlames))
                                 {
                                     var cmd = SpreadingCommands.Dequeue();
-                                    commands.Add($"{cmd} <{num}>");
-                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}>");
+                                    if(P.config.MarkSpreads) commands.Add($"{cmd} <{num}>");
+                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}> {P.config.MarkSpreads}");
                                 }
                                 else if (x.StatusList.Any(s => s.StatusId == EntangledFlames))
                                 {
                                     var cmd = EngangledCommands.Dequeue();
-                                    commands.Add($"{cmd} <{num}>");
-                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}>");
+                                    if (P.config.MarkStacks) commands.Add($"{cmd} <{num}>");
+                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}> {P.config.MarkStacks}");
                                 }
                                 else
                                 {
                                     var cmd = NoneCommands.Dequeue();
-                                    commands.Add($"{cmd} <{num}>");
-                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}>");
+                                    if (P.config.MarkNones) commands.Add($"{cmd} <{num}>");
+                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}> {P.config.MarkNones}");
                                 }
                             }
                             else
