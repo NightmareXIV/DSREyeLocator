@@ -40,11 +40,11 @@ namespace DSREyeLocator
         public bool MarkSpreads = true;
         public bool MarkStacks = true;
         public bool MarkNones = true;
+        public bool UseCustomCommands = false;
+        public string CustomCommandsSpread = "/marking attack1\n/marking attack2\n/marking attack3\n/marking attack4";
+        public string CustomCommandsStack = "/marking bind1\n/marking bind2";
+        public string CustomCommandsNone = "/marking ignore1\n/marking ignore2";
 
-        public bool TargetEnabled = false;
-        public Dragon MyDragon = Dragon.Nidhogg;
-        public float SwitchTreshold = 2.8f;
-        public bool NoDamageAkhAfah = true;
         public int ChangelogWindowVer = 0;
 
         public bool MapEffectDbg = false;

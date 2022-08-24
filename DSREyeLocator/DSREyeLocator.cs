@@ -110,7 +110,6 @@ namespace DSREyeLocator
                     if(P.config.EyeEnabled) EyeTick();
                     if(P.config.ChainEnabled) ChainsResolver.ChainsTick();
                     if (P.config.WrothFlames) FlamesTick();
-                    if (P.config.TargetEnabled) DDResolver.Tick();
                 });
             }
         }

@@ -28,10 +28,10 @@ namespace DSREyeLocator.Core
                 .Count(x => x.Any(s => s.StatusId == EntangledFlames || s.StatusId == SpreadingFlames)) == 6)
             {
                 FlamesResolved = true;
-                NextChatCommandAt = Environment.TickCount64 + 1000;
                 List<string> commands = new();
                 if (P.config.FlamesOnlySelf)
                 {
+                    NextChatCommandAt = Environment.TickCount64 + 100;
                     if (Svc.ClientState.LocalPlayer.StatusList.Any(x => x.StatusId == SpreadingFlames))
                     {
                         DuoLog.Debug("Flames: spread self");
@@ -50,48 +50,61 @@ namespace DSREyeLocator.Core
                 }
                 else
                 {
-                    Queue<string> EngangledCommands = new(new string[]
+                    Queue<string> EngangledCommands;
+                    Queue<string> NoneCommands;
+                    Queue<string> SpreadingCommands;
+                    NextChatCommandAt = Environment.TickCount64 + 500;
+                    if (P.config.UseCustomCommands)
                     {
-                    $"/marking {GetLocalizedBind()}1",
-                    $"/marking {GetLocalizedBind()}2",
-                    });
-                    Queue<string> NoneCommands = new(new string[]
+                        EngangledCommands = new(P.config.CustomCommandsStack.Split("\n"));
+                        NoneCommands = new(P.config.CustomCommandsNone.Split("\n"));
+                        SpreadingCommands = new(P.config.CustomCommandsSpread.Split("\n"));
+                    }
+                    else
                     {
-                    $"/marking {GetLocalizedIgnore()}1",
-                    $"/marking {GetLocalizedIgnore()}2",
-                    });
-                    Queue<string> SpreadingCommands = new(new string[]
-                    {
-                    $"/marking {GetLocalizedAttack()}1",
-                    $"/marking {GetLocalizedAttack()}2",
-                    $"/marking {GetLocalizedAttack()}3",
-                    $"/marking {GetLocalizedAttack()}4",
-                    });
+                        EngangledCommands = new(new string[]
+                        {
+                            $"/marking {GetLocalizedBind()}1",
+                            $"/marking {GetLocalizedBind()}2",
+                        });
+                        NoneCommands = new(new string[]
+                        {
+                            $"/marking {GetLocalizedIgnore()}1",
+                            $"/marking {GetLocalizedIgnore()}2",
+                        });
+                        SpreadingCommands = new(new string[]
+                        {
+                            $"/marking {GetLocalizedAttack()}1",
+                            $"/marking {GetLocalizedAttack()}2",
+                            $"/marking {GetLocalizedAttack()}3",
+                            $"/marking {GetLocalizedAttack()}4",
+                        });
+                    }
                     foreach (var s in Svc.Party)
                     {
                         if (s.GameObject is PlayerCharacter x)
                         {
-                            PluginLog.Information($"Player {x.Name}");
+                            PluginLog.Debug($"Player {x.Name}");
                             if (x.TryGetPlaceholder(out var num))
                             {
-                                PluginLog.Information($"-- Player {x.Name} placeholder {num} statuses {x.StatusList.Select(s => s.StatusId.ToString()).Join(", ")}");
+                                PluginLog.Debug($"-- Player {x.Name} placeholder {num} statuses {x.StatusList.Select(s => s.StatusId.ToString()).Join(", ")}");
                                 if (x.StatusList.Any(s => s.StatusId == SpreadingFlames))
                                 {
                                     var cmd = SpreadingCommands.Dequeue();
                                     if(P.config.MarkSpreads) commands.Add($"{cmd} <{num}>");
-                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}> {P.config.MarkSpreads}");
+                                    PluginLog.Debug($"-- Player {x.Name} command {cmd} <{num}> {P.config.MarkSpreads}");
                                 }
                                 else if (x.StatusList.Any(s => s.StatusId == EntangledFlames))
                                 {
                                     var cmd = EngangledCommands.Dequeue();
                                     if (P.config.MarkStacks) commands.Add($"{cmd} <{num}>");
-                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}> {P.config.MarkStacks}");
+                                    PluginLog.Debug($"-- Player {x.Name} command {cmd} <{num}> {P.config.MarkStacks}");
                                 }
                                 else
                                 {
                                     var cmd = NoneCommands.Dequeue();
                                     if (P.config.MarkNones) commands.Add($"{cmd} <{num}>");
-                                    PluginLog.Information($"-- Player {x.Name} command {cmd} <{num}> {P.config.MarkNones}");
+                                    PluginLog.Debug($"-- Player {x.Name} command {cmd} <{num}> {P.config.MarkNones}");
                                 }
                             }
                             else
@@ -119,12 +132,12 @@ namespace DSREyeLocator.Core
                         MacroManager.Execute(commands);
                     }
                 }
-                PluginLog.Information("=== Wroth flames ===");
+                PluginLog.Debug("=== Wroth flames ===");
                 foreach (var x in commands)
                 {
-                    PluginLog.Information(x);
+                    PluginLog.Debug(x);
                 }
-                PluginLog.Information("====================");
+                PluginLog.Debug("====================");
                 ClearScheduler?.Dispose();
                 ClearScheduler = new TickScheduler(ClearMarkers, 30000);
             }
@@ -134,7 +147,7 @@ namespace DSREyeLocator.Core
             List<string> l = new();
             if (P.config.FlamesOnlySelf)
             {
-                l.Add($"/marking off <me>");
+                //l.Add($"/marking off <me>");
             }
             else
             {
@@ -147,12 +160,12 @@ namespace DSREyeLocator.Core
             {
                 MacroManager.Execute(l);
             }
-            PluginLog.Information("=== Wroth flames ===");
+            PluginLog.Debug("=== Wroth flames ===");
             foreach (var x in l)
             {
-                PluginLog.Information(x);
+                PluginLog.Debug(x);
             }
-            PluginLog.Information("====================");
+            PluginLog.Debug("====================");
             ClearScheduler?.Dispose();
         }
 
@@ -227,12 +240,19 @@ namespace DSREyeLocator.Core
                 NextChatCommandAt = Environment.TickCount64 + new Random().Next(250, 500);
                 if (P.config.WrothFlamesOperational)
                 {
-                    PluginLog.Information($"Sending chat command: {command}");
-                    P.chat.SendMessage(command);
+                    PluginLog.Debug($"Sending chat command: {command}");
+                    if (command.StartsWith("/"))
+                    {
+                        P.chat.SendMessage(command);
+                    }
+                    else
+                    {
+                        DuoLog.Error($"Command must start with slash. Received: {command}");
+                    }
                 }
                 else
                 {
-                    PluginLog.Information($"Sending fake chat command: {command}");
+                    PluginLog.Debug($"Sending fake chat command: {command}");
                     P.chat.SendMessage($"/echo {command}");
                 }
             }

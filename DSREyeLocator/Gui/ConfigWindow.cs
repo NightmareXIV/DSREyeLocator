@@ -29,7 +29,6 @@ namespace DSREyeLocator.Gui
                 ("[P2/P5] Eye Locator", TabEyeConfig.Draw, P.config.EyeEnabled ? ImGuiColors.ParsedGreen : null, true),
                 ("[P1/P5] Chain Tether", TabChains.Draw, P.config.ChainEnabled ? ImGuiColors.ParsedGreen : null, true),
                 ("[P6] Flames Automarker", TabFlames.Draw, P.config.WrothFlames ? ImGuiColors.ParsedGreen : null, true),
-                ("[P6] TargetSwitcher", TabTargetSwitcher.Draw, P.config.TargetEnabled ? ImGuiColors.ParsedGreen : null, true),
                 ("Contribute", TabContribute.Draw, ImGuiColors.DalamudYellow, true),
                 ("Debug", Debug.Draw, ImGuiColors.DalamudGrey3, true)
                 );

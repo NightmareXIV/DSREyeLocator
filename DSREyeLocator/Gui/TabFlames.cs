@@ -37,7 +37,7 @@ namespace DSREyeLocator.Gui
                 }
             }
             ImGui.Checkbox("Add random delay between markings (recommended)", ref P.config.FlamesEmulateDelay);
-            if (P.config.FlamesEmulateDelay)
+            /*if (P.config.FlamesEmulateDelay)
             {
                 ImGui.SameLine();
                 if (ImGui.Button("Test"))
@@ -53,7 +53,7 @@ namespace DSREyeLocator.Gui
                     FlamesResolver.ChatCommands.Enqueue("/marking ignore2 <8>");
                 }
                 ImGuiComponents.HelpMarker("Will try to place markers on party members with delay. You need to be in combat.");
-            }
+            }*/
             ImGui.Checkbox("Self only", ref P.config.FlamesOnlySelf);
             if (P.config.FlamesOnlySelf)
             {
@@ -67,6 +67,33 @@ namespace DSREyeLocator.Gui
                 ImGui.Checkbox("Mark people with stack debuff", ref P.config.MarkStacks);
                 ImGui.Checkbox("Mark people with spread debuff", ref P.config.MarkSpreads);
                 ImGui.Checkbox("Mark people without debuff", ref P.config.MarkNones);
+                ImGui.Checkbox("Use custom commands", ref P.config.UseCustomCommands);
+                if (P.config.UseCustomCommands)
+                {
+                    ImGuiEx.Text("Commands for spreading players:");
+                    if (P.config.CustomCommandsSpread.Count(x => x == '\n') < 3)
+                    {
+                        ImGui.SameLine();
+                        ImGuiEx.Text(Environment.TickCount % 1000 > 500 ? ImGuiColors.DalamudRed : ImGuiColors.DalamudYellow, "Must have at least 4 commands");
+                    }
+                    ImGui.InputTextMultiline("##spread", ref P.config.CustomCommandsSpread, 1000, new(ImGui.GetContentRegionAvail().X, 100));
+
+                    ImGuiEx.Text("Commands for stacking players:");
+                    if (P.config.CustomCommandsStack.Count(x => x == '\n') < 1)
+                    {
+                        ImGui.SameLine();
+                        ImGuiEx.Text(Environment.TickCount % 1000 > 500 ? ImGuiColors.DalamudRed : ImGuiColors.DalamudYellow, "Must have at least 4 commands");
+                    }
+                    ImGui.InputTextMultiline("##stak", ref P.config.CustomCommandsStack, 1000, new(ImGui.GetContentRegionAvail().X, 100));
+
+                    ImGuiEx.Text("Commands for no debuff players:");
+                    if (P.config.CustomCommandsNone.Count(x => x == '\n') < 1)
+                    {
+                        ImGui.SameLine();
+                        ImGuiEx.Text(Environment.TickCount % 1000 > 500 ? ImGuiColors.DalamudRed : ImGuiColors.DalamudYellow, "Must have at least 4 commands");
+                    }
+                    ImGui.InputTextMultiline("##none", ref P.config.CustomCommandsNone, 1000, new(ImGui.GetContentRegionAvail().X, 100));
+                }
             }
         }
     }
