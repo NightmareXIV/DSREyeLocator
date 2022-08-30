@@ -37,16 +37,18 @@ namespace DSREyeLocator.Core
         {
             Safe(delegate
             {
-                if (direction == NetworkMessageDirection.ZoneDown)
+            if (direction == NetworkMessageDirection.ZoneDown)
+            {
+                if (P.config.MapEffectDbg && opCode == P.config.MapEventOpcode)
                 {
-                    if (P.config.MapEffectDbg && opCode == P.config.MapEventOpcode)
-                    {
-                        var list = P.config.MapEffectLog.Last();
-                        if(list.TerritoryType == Svc.ClientState.TerritoryType)
+                    var list = P.config.MapEffectLog.Last();
+                    var eff = *(FFXIVIpcMapEffect*)dataPtr;
+                        if (list.TerritoryType == Svc.ClientState.TerritoryType)
                         {
                             var header = MemoryHelper.ReadRaw(dataPtr - 16, 16);
-                            list.structs.Add((header, *(FFXIVIpcMapEffect*)dataPtr));
+                            list.structs.Add((header, eff));
                         }
+                        Svc.Chat.PrintChat(new() { Message = $"{eff.unk_4:X4} {eff.unk_8:X2} {eff.unk_10:X2} {eff.unk_12:X2} {eff.unk_14:X2}", Type = Dalamud.Game.Text.XivChatType.Ls8 });
                         Svc.PluginInterface.SavePluginConfig(P.config);
                     }
                     if (Svc.ClientState.TerritoryType == 838 && P.configWindow.IsOpen && !TabMainConfig.OpcodeFound)

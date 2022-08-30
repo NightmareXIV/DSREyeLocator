@@ -95,6 +95,10 @@ namespace DSREyeLocator.Gui
                     ImGui.InputTextMultiline("##none", ref P.config.CustomCommandsNone, 1000, new(ImGui.GetContentRegionAvail().X, 100));
                 }
             }
+            if(ImGui.Button("Clear markers"))
+            {
+                ClearMarkers();
+            }
         }
     }
 }
