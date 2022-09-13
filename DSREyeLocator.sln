@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32611.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSREyeLocator", "DSREyeLocator\DSREyeLocator.csproj", "{FAF3C4BD-459A-46FE-A157-BABAF447E543}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommons", "..\ECommons\ECommons\ECommons.csproj", "{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAF3C4BD-459A-46FE-A157-BABAF447E543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAF3C4BD-459A-46FE-A157-BABAF447E543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAF3C4BD-459A-46FE-A157-BABAF447E543}.Debug|x64.ActiveCfg = Debug|x64
+		{FAF3C4BD-459A-46FE-A157-BABAF447E543}.Debug|x64.Build.0 = Debug|x64
+		{FAF3C4BD-459A-46FE-A157-BABAF447E543}.Release|Any CPU.ActiveCfg = Release|x64
+		{FAF3C4BD-459A-46FE-A157-BABAF447E543}.Release|Any CPU.Build.0 = Release|x64
+		{FAF3C4BD-459A-46FE-A157-BABAF447E543}.Release|x64.ActiveCfg = Release|x64
+		{FAF3C4BD-459A-46FE-A157-BABAF447E543}.Release|x64.Build.0 = Release|x64
+		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Debug|Any CPU.Build.0 = Debug|x64
+		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Debug|x64.ActiveCfg = Debug|x64
+		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Debug|x64.Build.0 = Debug|x64
+		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Release|Any CPU.ActiveCfg = Release|x64
+		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Release|Any CPU.Build.0 = Release|x64
+		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Release|x64.ActiveCfg = Release|x64
+		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F82B6386-EB39-4E13-9568-14B6C12D414F}
+	EndGlobalSection
+EndGlobal
