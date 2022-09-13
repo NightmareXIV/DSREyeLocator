@@ -2,11 +2,13 @@
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using ECommons.Automation;
 using ECommons.GameFunctions;
+using ECommons.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PluginLog = Dalamud.Logging.PluginLog;
 
 namespace DSREyeLocator.Core
 {

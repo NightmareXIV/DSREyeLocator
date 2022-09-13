@@ -30,7 +30,7 @@ namespace DSREyeLocator
         public DSREyeLocator(DalamudPluginInterface pi)
         {
             P = this;
-            ECommons.ECommons.Init(pi, Module.ObjectFunctions, Module.DalamudReflector);
+            ECommons.ECommons.Init(pi, this, Module.ObjectFunctions, Module.DalamudReflector);
             /*DuoLog.Verbose("Verbose");
             DuoLog.Debug("Debug");
             DuoLog.Information("Information");
@@ -53,7 +53,7 @@ namespace DSREyeLocator
 
                 if (DalamudReflector.TryGetDalamudStartInfo(out var info))
                 {
-                    OpcodeUpdater.DownloadOpcodes($"https://github.com/Eternita-S/MyDalamudPlugins/raw/main/opcodes/{info.GameVersion}.txt",
+                    OpcodeUpdater.DownloadOpcodes($"https://github.com/NightmareXIV/MyDalamudPlugins/raw/main/opcodes/{info.GameVersion}.txt",
                         (dic) =>
                         {
                             if (dic.TryGetValue("MapEffect", out var code))
