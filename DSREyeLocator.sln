@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32611.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSREyeLocator", "DSREyeLocator\DSREyeLocator.csproj", "{FAF3C4BD-459A-46FE-A157-BABAF447E543}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSREyeLocator", "DSREyeLocator\DSREyeLocator.csproj", "{FAF3C4BD-459A-46FE-A157-BABAF447E543}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommons", "..\ECommons\ECommons\ECommons.csproj", "{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommons", "ECommons\ECommons\ECommons.csproj", "{7282D20C-2657-4E73-9C5D-12BF011433C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +23,14 @@ Global
 		{FAF3C4BD-459A-46FE-A157-BABAF447E543}.Release|Any CPU.Build.0 = Release|x64
 		{FAF3C4BD-459A-46FE-A157-BABAF447E543}.Release|x64.ActiveCfg = Release|x64
 		{FAF3C4BD-459A-46FE-A157-BABAF447E543}.Release|x64.Build.0 = Release|x64
-		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Debug|Any CPU.Build.0 = Debug|x64
-		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Debug|x64.ActiveCfg = Debug|x64
-		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Debug|x64.Build.0 = Debug|x64
-		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Release|Any CPU.ActiveCfg = Release|x64
-		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Release|Any CPU.Build.0 = Release|x64
-		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Release|x64.ActiveCfg = Release|x64
-		{5464F0AD-33E2-4CA3-B2AD-5870F9EC71FF}.Release|x64.Build.0 = Release|x64
+		{7282D20C-2657-4E73-9C5D-12BF011433C1}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{7282D20C-2657-4E73-9C5D-12BF011433C1}.Debug|Any CPU.Build.0 = Debug|x64
+		{7282D20C-2657-4E73-9C5D-12BF011433C1}.Debug|x64.ActiveCfg = Debug|x64
+		{7282D20C-2657-4E73-9C5D-12BF011433C1}.Debug|x64.Build.0 = Debug|x64
+		{7282D20C-2657-4E73-9C5D-12BF011433C1}.Release|Any CPU.ActiveCfg = Release|x64
+		{7282D20C-2657-4E73-9C5D-12BF011433C1}.Release|Any CPU.Build.0 = Release|x64
+		{7282D20C-2657-4E73-9C5D-12BF011433C1}.Release|x64.ActiveCfg = Release|x64
+		{7282D20C-2657-4E73-9C5D-12BF011433C1}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
