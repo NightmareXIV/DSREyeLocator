@@ -1,0 +1,7 @@
+[submodule "ECommons"]
+	path = ECommons
+	url = https://github.com/NightmareXIV/ECommons
+	branch = cn
+[submodule "cn"]
+	path = cn
+	url = https://github.com/NightmareXIV/ECommons
