@@ -173,62 +173,17 @@ namespace DSREyeLocator.Core
 
         internal static string GetLocalizedAttack()
         {
-            if (Svc.Data.Language == ClientLanguage.French)
-            {
-                return "attaque";
-            }
-            else if (Svc.Data.Language == ClientLanguage.German)
-            {
-                return "att";
-            }
-            else if (Svc.Data.Language == ClientLanguage.Japanese)
-            {
-                return "attack";
-            }
-            else
-            {
-                return "attack";
-            }
+            return "attack";
         }
 
         internal static string GetLocalizedBind()
         {
-            if (Svc.Data.Language == ClientLanguage.French)
-            {
-                return "entrave";
-            }
-            else if (Svc.Data.Language == ClientLanguage.German)
-            {
-                return "bind";
-            }
-            else if (Svc.Data.Language == ClientLanguage.Japanese)
-            {
-                return "bind";
-            }
-            else
-            {
-                return "bind";
-            }
+            return "bind";
         }
 
         internal static string GetLocalizedIgnore()
         {
-            if (Svc.Data.Language == ClientLanguage.French)
-            {
-                return "interdit";
-            }
-            else if (Svc.Data.Language == ClientLanguage.German)
-            {
-                return "ignor";
-            }
-            else if (Svc.Data.Language == ClientLanguage.Japanese)
-            {
-                return "stop";
-            }
-            else
-            {
-                return "ignore";
-            }
+            return "stop";
         }
 
         internal static void FlamesTick()

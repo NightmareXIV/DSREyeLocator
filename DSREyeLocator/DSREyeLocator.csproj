@@ -6,14 +6,14 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
 		<Platforms>x64</Platforms>
 		<LangVersion>latest</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<OutputPath>bin\$(Configuration)\</OutputPath>
+    <OutputPath>C:\DalamudCN\DsrToolboxBIN\$(Configuration)\</OutputPath>
 		<NoWarn>CS1591</NoWarn>
 	</PropertyGroup>
 
@@ -23,7 +23,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
+    <DalamudLibPath>C:\DalamudCN\addon\Hooks\dev\</DalamudLibPath>
 	</PropertyGroup>
 
 	<PropertyGroup>
