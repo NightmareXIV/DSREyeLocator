@@ -30,7 +30,7 @@ namespace DSREyeLocator
         public DSREyeLocator(DalamudPluginInterface pi)
         {
             P = this;
-            ECommons.ECommons.Init(pi, this, Module.ObjectFunctions, Module.DalamudReflector);
+            ECommonsMain.Init(pi, this, Module.ObjectFunctions, Module.DalamudReflector);
             /*DuoLog.Verbose("Verbose");
             DuoLog.Debug("Debug");
             DuoLog.Information("Information");
@@ -88,7 +88,7 @@ namespace DSREyeLocator
             Safe(overlayWindow.Dispose);
             Safe(Headmarker.Dispose);
             Svc.ClientState.TerritoryChanged -= TerrChanged;
-            ECommons.ECommons.Dispose();
+            ECommonsMain.Dispose();
         }
 
         private void TerrChanged(object sender, ushort e)
