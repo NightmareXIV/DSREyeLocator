@@ -24,12 +24,18 @@ namespace DSREyeLocator.Gui
 
         public override void Draw()
         {
+            KoFiButton.DrawRight();
             ImGuiEx.EzTabBar("DSREyeMainTabBar",
-                ("General", TabMainConfig.Draw, null, true),
-                ("[P2/P5] Eye Locator", TabEyeConfig.Draw, P.config.EyeEnabled ? ImGuiColors.ParsedGreen : null, true),
-                ("[P1/P5] Chain Tether", TabChains.Draw, P.config.ChainEnabled ? ImGuiColors.ParsedGreen : null, true),
-                ("[P6] Flames Automarker", TabFlames.Draw, P.config.WrothFlames ? ImGuiColors.ParsedGreen : null, true),
-                ("Contribute", TabContribute.Draw, ImGuiColors.DalamudYellow, true),
+                ("Modules", delegate
+                {
+                    ImGuiEx.EzTabBar("Func",
+                        ("[P2/P5] Eye Locator", TabEyeConfig.Draw, P.config.EyeEnabled ? ImGuiColors.ParsedGreen : null, true),
+                        ("[P1/P5] Chain Tether", TabChains.Draw, P.config.ChainEnabled ? ImGuiColors.ParsedGreen : null, true),
+                        ("[P6] Flames Automarker", TabFlames.Draw, P.config.WrothFlames ? ImGuiColors.ParsedGreen : null, true)
+                        );
+                }, ImGuiColors.DalamudOrange, true
+                ),
+                ("Options", TabMainConfig.Draw, null, true),
                 ("Debug", Debug.Draw, ImGuiColors.DalamudGrey3, true)
                 );
         }
