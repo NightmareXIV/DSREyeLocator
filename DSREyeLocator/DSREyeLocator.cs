@@ -8,6 +8,7 @@ using DSREyeLocator.Core;
 using DSREyeLocator.Gui;
 using ECommons.Automation;
 using ECommons.GameFunctions;
+using ECommons.Hooks;
 using ECommons.MathHelpers;
 using ECommons.Opcodes;
 using ECommons.Reflection;
@@ -31,12 +32,6 @@ namespace DSREyeLocator
         {
             P = this;
             ECommonsMain.Init(pi, this, Module.ObjectFunctions, Module.DalamudReflector);
-            /*DuoLog.Verbose("Verbose");
-            DuoLog.Debug("Debug");
-            DuoLog.Information("Information");
-            DuoLog.Warning("Warning");
-            DuoLog.Error("Error");
-            DuoLog.Fatal("Fatal");*/
             new TickScheduler(delegate
             {
                 config = Svc.PluginInterface.GetPluginConfig() as Config ?? new();
@@ -45,7 +40,7 @@ namespace DSREyeLocator
                 ws.AddWindow(configWindow);
                 overlayWindow = new();
                 ws.AddWindow(overlayWindow);
-                Svc.GameNetwork.NetworkMessage += OnNetworkMessage;
+                //Svc.GameNetwork.NetworkMessage += OnNetworkMessage;
                 Svc.Framework.Update += Tick;
                 Svc.PluginInterface.UiBuilder.Draw += ws.Draw;
                 Svc.PluginInterface.UiBuilder.OpenConfigUi += delegate { configWindow.IsOpen = true; };
@@ -75,13 +70,17 @@ namespace DSREyeLocator
                 Svc.ClientState.TerritoryChanged += TerrChanged;
                 Svc.Commands.AddHandler("/eye", new(delegate { configWindow.IsOpen = true; }) { HelpMessage = "Open configuration" });
                 chat = new();
+                MapEffect.Init((a1, a2, a3, a4) =>
+                {
+                    EyeResolver.ProcessMapEffect(a2, a4);
+                });
             });
         }
 
         public void Dispose()
         {
             Svc.Commands.RemoveHandler("/eye");
-            Svc.GameNetwork.NetworkMessage -= OnNetworkMessage;
+            //Svc.GameNetwork.NetworkMessage -= OnNetworkMessage;
             Svc.Framework.Update -= Tick;
             Svc.PluginInterface.UiBuilder.Draw -= ws.Draw;
             Svc.Condition.ConditionChange -= Condition_ConditionChange;
