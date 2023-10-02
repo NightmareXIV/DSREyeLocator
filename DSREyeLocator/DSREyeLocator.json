@@ -2,10 +2,8 @@
   "Author": "NightmareXIV",
   "Name": "DSR Toolbox",
   "InternalName": "DSREyeLocator",
-  "AssemblyVersion": "9.0.0.0",
   "Description": "Current functions:\nResolve eyes position\nWroth flames automarker (whole group and personal)\nTether to your chain partner",
   "ApplicableVersion": "any",
-  "DalamudApiLevel": 8,
   "LoadPriority": 0,
   "ImageUrls": [],
   "Punchline": "A helper plugin for Dragonsong's Reprise (Ultimate)."

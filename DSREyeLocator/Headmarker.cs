@@ -20,7 +20,7 @@ namespace DSREyeLocator
         internal static void Init()
         {
             var actorVfxCreateAddress = Svc.SigScanner.ScanText("40 53 55 56 57 48 81 EC ?? ?? ?? ?? 0F 29 B4 24 ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 ?? ?? ?? ?? 0F B6 AC 24 ?? ?? ?? ?? 0F 28 F3 49 8B F8");
-            ActorVfxCreateHook = new Hook<ActorVfxCreateDelegate2>(actorVfxCreateAddress, ActorVfxNewHandler);
+            ActorVfxCreateHook = Svc.Hook.HookFromAddress<ActorVfxCreateDelegate2>(actorVfxCreateAddress, ActorVfxNewHandler);
             ActorVfxCreateHook.Enable();
         }
 

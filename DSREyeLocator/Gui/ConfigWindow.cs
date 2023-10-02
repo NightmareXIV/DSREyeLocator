@@ -25,7 +25,7 @@ namespace DSREyeLocator.Gui
         public override void Draw()
         {
             KoFiButton.DrawRight();
-            ImGuiEx.EzTabBar("DSREyeMainTabBar",
+            ImGuiEx.EzTabBar("DSREyeMainTabBar", true,
                 ("Modules", delegate
                 {
                     ImGuiEx.EzTabBar("Func",

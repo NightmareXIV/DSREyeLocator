@@ -90,7 +90,7 @@ namespace DSREyeLocator
             ECommonsMain.Dispose();
         }
 
-        private void TerrChanged(object sender, ushort e)
+        private void TerrChanged(ushort e)
         {
             if (P.config.MapEffectDbg)
             {
@@ -99,7 +99,7 @@ namespace DSREyeLocator
             }
         }
 
-        private void Tick(Framework framework)
+        private void Tick(object framework)
         {
             if (Svc.ClientState.LocalPlayer == null || Svc.Condition[ConditionFlag.DutyRecorderPlayback]) return;
             if(Svc.ClientState.TerritoryType == DSRTerritory || P.config.Test)

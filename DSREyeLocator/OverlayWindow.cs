@@ -1,4 +1,6 @@
-﻿using ECommons.MathHelpers;
+﻿using Dalamud.Interface.Internal;
+using Dalamud.Interface.Utility;
+using ECommons.MathHelpers;
 using ImGuiScene;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace DSREyeLocator
     internal class OverlayWindow : Window, IDisposable
     {
         Vector2 WinSize;
-        TextureWrap imgYes, imgNo1, imgNo2;
+        IDalamudTextureWrap imgYes, imgNo1, imgNo2;
         internal bool Correct = false;
         
         public OverlayWindow() : base("DSREye Overlay",
