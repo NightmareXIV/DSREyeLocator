@@ -3,12 +3,10 @@ using Dalamud.Game.Network;
 using Dalamud.Memory;
 using DSREyeLocator.Gui;
 using ECommons.GameFunctions;
-using ECommons.Logging;
 using ECommons.MathHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +33,7 @@ namespace DSREyeLocator.Core
         };
         internal const uint KingThordanNameID = 3632;
 
-        /*internal static void OnNetworkMessage(IntPtr dataPtr, ushort opCode, uint sourceActorId, uint targetActorId, NetworkMessageDirection direction)
+        internal static void OnNetworkMessage(IntPtr dataPtr, ushort opCode, uint sourceActorId, uint targetActorId, NetworkMessageDirection direction)
         {
             Safe(delegate
             {
@@ -90,28 +88,6 @@ namespace DSREyeLocator.Core
                     }
                 }
             });
-        }*/
-
-        internal static void ProcessMapEffect(uint cmd, ushort where)
-        {
-            if (P.config.EyeEnabled && (Svc.ClientState.TerritoryType == DSRTerritory || P.config.Test))
-            {
-                if (IsSanctity() || IsDeath())
-                {
-                    if (cmd == 1)
-                    {
-                        EyePos = where;
-                        if (!EyesPositions.ContainsKey(EyePos))
-                        {
-                            DuoLog.Error($"No data for this eye position {EyePos} was present");
-                        }
-                    }
-                    else if (cmd == 32)
-                    {
-                        EyePos = -1;
-                    }
-                }
-            }
         }
 
 
