@@ -48,7 +48,7 @@ namespace DSREyeLocator.Core
                             var header = MemoryHelper.ReadRaw(dataPtr - 16, 16);
                             list.structs.Add((header, eff));
                         }
-                        Svc.Chat.PrintChat(new() { Message = $"{eff.unk_4:X4} {eff.unk_8:X2} {eff.unk_10:X2} {eff.unk_12:X2} {eff.unk_14:X2}", Type = Dalamud.Game.Text.XivChatType.Ls8 });
+                        Svc.Chat.Print(new() { Message = $"{eff.unk_4:X4} {eff.unk_8:X2} {eff.unk_10:X2} {eff.unk_12:X2} {eff.unk_14:X2}", Type = Dalamud.Game.Text.XivChatType.Ls8 });
                         Svc.PluginInterface.SavePluginConfig(P.config);
                     }
                     if (Svc.ClientState.TerritoryType == 838 && P.configWindow.IsOpen && !TabMainConfig.OpcodeFound)
