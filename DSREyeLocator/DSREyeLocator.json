@@ -6,5 +6,6 @@
   "ApplicableVersion": "any",
   "LoadPriority": 0,
   "ImageUrls": [],
-  "Punchline": "A helper plugin for Dragonsong's Reprise (Ultimate)."
+    "Punchline": "A helper plugin for Dragonsong's Reprise (Ultimate).",
+    "DalamudApiLevel": 10
 }

@@ -1,4 +1,5 @@
 ﻿using Dalamud.Hooking;
+using ECommons.Logging;
 using Reloaded.Hooks.Definitions.X64;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace DSREyeLocator
                             {
                                 AppearedAt = Environment.TickCount64,
                                 Path = vfxPath,
-                                ObjectID = p.GameObject.ObjectId
+                                EntityId = p.GameObject.EntityId
                             });
                         }
                     }

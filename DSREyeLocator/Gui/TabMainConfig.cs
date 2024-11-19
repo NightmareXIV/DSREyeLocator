@@ -46,7 +46,7 @@ namespace DSREyeLocator.Gui
             {
                 var angle = ConeHandler.GetAngleTo(Svc.Targets.Target.Position.ToVector2());
                 ImGuiEx.Text(ConeHandler.IsInCone(Svc.Targets.Target.Position.ToVector2()) ? ImGuiColors.DalamudRed : ImGuiColors.DalamudWhite, $"{angle}");
-                if (Svc.Targets.Target is Character c)
+                if (Svc.Targets.Target is ICharacter c)
                 {
                     ImGuiEx.Text($"{c.NameId}");
                 }

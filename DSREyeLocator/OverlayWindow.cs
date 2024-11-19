@@ -1,4 +1,6 @@
 ﻿using Dalamud.Interface.Internal;
+using Dalamud.Interface.Textures;
+using Dalamud.Interface.Textures.TextureWraps;
 using Dalamud.Interface.Utility;
 using ECommons.MathHelpers;
 using ImGuiScene;
@@ -14,7 +16,7 @@ namespace DSREyeLocator
     internal class OverlayWindow : Window, IDisposable
     {
         Vector2 WinSize;
-        IDalamudTextureWrap imgYes, imgNo1, imgNo2;
+        ISharedImmediateTexture imgYes, imgNo1, imgNo2;
         internal bool Correct = false;
         
         public OverlayWindow() : base("DSREye Overlay",
@@ -23,9 +25,9 @@ namespace DSREyeLocator
             true)
         {
             this.RespectCloseHotkey = false;
-            imgYes = Svc.PluginInterface.UiBuilder.LoadImage(Path.Combine(Svc.PluginInterface.AssemblyLocation.DirectoryName, "yes.png"));
-            imgNo1 = Svc.PluginInterface.UiBuilder.LoadImage(Path.Combine(Svc.PluginInterface.AssemblyLocation.DirectoryName, "no1.png"));
-            imgNo2 = Svc.PluginInterface.UiBuilder.LoadImage(Path.Combine(Svc.PluginInterface.AssemblyLocation.DirectoryName, "no2.png"));
+            imgYes = Svc.Texture.GetFromFile(Path.Combine(Svc.PluginInterface.AssemblyLocation.DirectoryName, "yes.png"));
+            imgNo1 = Svc.Texture.GetFromFile(Path.Combine(Svc.PluginInterface.AssemblyLocation.DirectoryName, "no1.png"));
+            imgNo2 = Svc.Texture.GetFromFile(Path.Combine(Svc.PluginInterface.AssemblyLocation.DirectoryName, "no2.png"));
             this.IsOpen = true;
         }
 
@@ -46,20 +48,17 @@ namespace DSREyeLocator
             WinSize = ImGui.GetWindowSize();
             if (Correct)
             {
-                ImGui.Image(imgYes.ImGuiHandle, new(imgYes.Width * P.config.Scale, imgYes.Height * P.config.Scale));
+                ImGui.Image(imgYes.GetWrapOrEmpty().ImGuiHandle, new(imgYes.GetWrapOrEmpty().Width * P.config.Scale, imgYes.GetWrapOrEmpty().Height * P.config.Scale));
             }
             else
             {
                 var image = P.config.BannerBlink && Environment.TickCount % 400 > 200 ? imgNo1 : imgNo2;
-                ImGui.Image(image.ImGuiHandle, new(image.Width * P.config.Scale, image.Height * P.config.Scale));
+                ImGui.Image(image.GetWrapOrEmpty().ImGuiHandle, new(image.GetWrapOrEmpty().Width * P.config.Scale, image.GetWrapOrEmpty().Height * P.config.Scale));
             }
         }
 
         public void Dispose()
         {
-            imgYes.Dispose();
-            imgNo1.Dispose();
-            imgNo2.Dispose();
         }
     }
 }

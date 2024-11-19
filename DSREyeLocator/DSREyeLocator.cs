@@ -8,6 +8,7 @@ using DSREyeLocator.Core;
 using DSREyeLocator.Gui;
 using ECommons.Automation;
 using ECommons.GameFunctions;
+using ECommons.Logging;
 using ECommons.MathHelpers;
 using ECommons.Opcodes;
 using ECommons.Reflection;
@@ -27,7 +28,7 @@ namespace DSREyeLocator
         internal Config config;
         internal Chat chat;
 
-        public DSREyeLocator(DalamudPluginInterface pi)
+        public DSREyeLocator(IDalamudPluginInterface pi)
         {
             P = this;
             ECommonsMain.Init(pi, this, Module.ObjectFunctions, Module.DalamudReflector);

@@ -3,6 +3,7 @@ using Dalamud.Game.Network;
 using Dalamud.Memory;
 using DSREyeLocator.Gui;
 using ECommons.GameFunctions;
+using ECommons.Logging;
 using ECommons.MathHelpers;
 using System;
 using System.Collections.Generic;
@@ -109,7 +110,7 @@ namespace DSREyeLocator.Core
             {
                 foreach (var x in Svc.Objects)
                 {
-                    if (x is BattleNpc b && b.IsCasting && b.NameId == KingThordanNameID)
+                    if (x is IBattleNpc b && b.IsCasting && b.NameId == KingThordanNameID)
                     {
                         if (SanctityStartTime == 0 && b.CastActionId == 25569) //sanctity of the ward
                         {
@@ -124,7 +125,7 @@ namespace DSREyeLocator.Core
                     }
                 }
                 if (((IsSanctity() && Environment.TickCount64 > SanctityStartTimeDelay) || (IsDeath() && Environment.TickCount64 > DeathStartTimeDelay)) && EyesPositions.TryGetValue(EyePos, out var eye)
-                    && Svc.Objects.TryGetFirst(x => x is BattleNpc b && b.NameId == KingThordanNameID
+                    && Svc.Objects.TryGetFirst(x => x is IBattleNpc b && b.NameId == KingThordanNameID
                     && b.IsCharacterVisible(), out var thordan))
                 {
                     if (P.config.EnableTether)

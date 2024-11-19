@@ -1,4 +1,5 @@
 ﻿using Dalamud;
+using Dalamud.Game;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using ECommons.Automation;
 using ECommons.GameFunctions;
@@ -8,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PluginLog = Dalamud.Logging.PluginLog;
 
 namespace DSREyeLocator.Core
 {
@@ -25,8 +25,8 @@ namespace DSREyeLocator.Core
         internal static void ResolveFlames()
         {
             if (!FlamesResolved && Svc.Party
-                .Where(x => x.GameObject is PlayerCharacter)
-                .Select(x => ((PlayerCharacter)x.GameObject).StatusList)
+                .Where(x => x.GameObject is IPlayerCharacter)
+                .Select(x => ((IPlayerCharacter)x.GameObject).StatusList)
                 .Count(x => x.Any(s => s.StatusId == EntangledFlames || s.StatusId == SpreadingFlames)) == 6)
             {
                 FlamesResolved = true;
@@ -84,7 +84,7 @@ namespace DSREyeLocator.Core
                     }
                     foreach (var s in Svc.Party)
                     {
-                        if (s.GameObject is PlayerCharacter x)
+                        if (s.GameObject is IPlayerCharacter x)
                         {
                             PluginLog.Debug($"Player {x.Name}");
                             if (x.TryGetPlaceholder(out var num))

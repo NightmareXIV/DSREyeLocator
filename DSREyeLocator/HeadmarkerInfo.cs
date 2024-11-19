@@ -10,6 +10,6 @@ namespace DSREyeLocator
     {
         internal long AppearedAt;
         internal string Path = "";
-        internal uint ObjectID = 0;
+        internal uint EntityId = 0;
     }
 }

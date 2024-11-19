@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Interface.Components;
+using ECommons.Funding;
 using ECommons.MathHelpers;
 using ECommons.Reflection;
 using System;
@@ -24,8 +25,8 @@ namespace DSREyeLocator.Gui
 
         public override void Draw()
         {
-            KoFiButton.DrawRight();
-            ImGuiEx.EzTabBar("DSREyeMainTabBar", true,
+            PatreonBanner.DrawRight();
+            ImGuiEx.EzTabBar("DSREyeMainTabBar", PatreonBanner.Text,
                 ("Modules", delegate
                 {
                     ImGuiEx.EzTabBar("Func",

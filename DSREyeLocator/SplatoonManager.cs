@@ -1,4 +1,5 @@
-﻿using ECommons.Reflection;
+﻿using ECommons.Logging;
+using ECommons.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,7 @@ namespace DSREyeLocator
             element.GetType().GetField("offY").SetValue(element, b.Z);
             element.GetType().GetField("radius").SetValue(element, 0f);
             element.GetType().GetField("color").SetValue(element, color);
+            element.GetType().GetField("RenderEngineKind").SetValue(element, 2);
             if (thickness != null) element.GetType().GetField("thicc").SetValue(element, thickness.Value);
             spl.GetType()
                 .GetMethod("InjectElement")

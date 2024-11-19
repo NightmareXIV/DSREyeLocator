@@ -34,7 +34,7 @@ namespace DSREyeLocator.Core
         {
             foreach(var x in Headmarker.HeadmarkerInfos)
             {
-                if(x.ObjectID == Svc.ClientState.LocalPlayer.ObjectId && x.AppearedAt + 7000 > Environment.TickCount64)
+                if(x.EntityId == Svc.ClientState.LocalPlayer.EntityId && x.AppearedAt + 7000 > Environment.TickCount64)
                 {
                     selfPath = x.Path;
                     return true;
@@ -44,12 +44,12 @@ namespace DSREyeLocator.Core
             return false;
         }
 
-        internal static bool TryFindPartner(string path, out GameObject pc)
+        internal static bool TryFindPartner(string path, out IGameObject pc)
         {
             foreach (var x in Headmarker.HeadmarkerInfos)
             {
-                if (x.ObjectID != Svc.ClientState.LocalPlayer.ObjectId && x.AppearedAt + 10000 > Environment.TickCount64 && x.Path == path
-                    && Svc.Party.TryGetFirst(z => z.GameObject?.ObjectId == x.ObjectID, out var pm))
+                if (x.EntityId != Svc.ClientState.LocalPlayer.EntityId && x.AppearedAt + 10000 > Environment.TickCount64 && x.Path == path
+                    && Svc.Party.TryGetFirst(z => z.GameObject?.EntityId == x.EntityId, out var pm))
                 {
                     pc = pm.GameObject;
                     return true;
