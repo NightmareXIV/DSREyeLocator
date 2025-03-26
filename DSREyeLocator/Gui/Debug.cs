@@ -67,7 +67,7 @@ namespace DSREyeLocator.Gui
                 for (var i = P.config.MapEffectLog.Count - 1; i >= 0; i--)
                 {
                     var el = P.config.MapEffectLog[i];
-                    ImGuiEx.Text(el.TerritoryType.GetTerritoryName());
+                    ImGuiEx.Text(TerritoryName.GetTerritoryName(el.TerritoryType));
                     ImGui.SameLine();
                     if (ImGui.SmallButton($"Delete (hold ctrl)##{i}") && ImGui.GetIO().KeyCtrl)
                     {

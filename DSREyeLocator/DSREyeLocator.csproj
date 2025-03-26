@@ -2,11 +2,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<Authors>NightmareXIV</Authors>
-		<Version>2.0.1.5</Version>
+		<Version>2.0.1.6</Version>
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-windows7.0</TargetFramework>
+		<TargetFramework>net9.0-windows7.0</TargetFramework>
 		<Platforms>x64</Platforms>
 		<LangVersion>preview</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -72,6 +72,10 @@
 			<HintPath>$(DalamudLibPath)Reloaded.Hooks.Definitions.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
+      <Reference Include="InteropGenerator.Runtime">
+          <HintPath>$(DalamudLibPath)InteropGenerator.Runtime.dll</HintPath>
+          <Private>False</Private>
+      </Reference>
 	</ItemGroup>
 
 	<ItemGroup>
