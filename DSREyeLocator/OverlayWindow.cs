@@ -48,12 +48,12 @@ namespace DSREyeLocator
             WinSize = ImGui.GetWindowSize();
             if (Correct)
             {
-                ImGui.Image(imgYes.GetWrapOrEmpty().ImGuiHandle, new(imgYes.GetWrapOrEmpty().Width * P.config.Scale, imgYes.GetWrapOrEmpty().Height * P.config.Scale));
+                ImGui.Image(imgYes.GetWrapOrEmpty().Handle, new(imgYes.GetWrapOrEmpty().Width * P.config.Scale, imgYes.GetWrapOrEmpty().Height * P.config.Scale));
             }
             else
             {
                 var image = P.config.BannerBlink && Environment.TickCount % 400 > 200 ? imgNo1 : imgNo2;
-                ImGui.Image(image.GetWrapOrEmpty().ImGuiHandle, new(image.GetWrapOrEmpty().Width * P.config.Scale, image.GetWrapOrEmpty().Height * P.config.Scale));
+                ImGui.Image(image.GetWrapOrEmpty().Handle, new(image.GetWrapOrEmpty().Width * P.config.Scale, image.GetWrapOrEmpty().Height * P.config.Scale));
             }
         }
 

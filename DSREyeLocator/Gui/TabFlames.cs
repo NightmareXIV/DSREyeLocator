@@ -1,5 +1,6 @@
 ﻿using Dalamud.Interface.Components;
 using DSREyeLocator.Core;
+using ECommons.Automation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,17 +24,17 @@ namespace DSREyeLocator.Gui
                 ImGui.SameLine();
                 if (ImGui.Button("attack marker"))
                 {
-                    P.chat.SendMessage($"/marking {FlamesResolver.GetLocalizedAttack()}1 <me>");
+                    Chat.SendMessage($"/marking {FlamesResolver.GetLocalizedAttack()}1 <me>");
                 }
                 ImGui.SameLine();
                 if (ImGui.Button("bind marker"))
                 {
-                    P.chat.SendMessage($"/marking {FlamesResolver.GetLocalizedBind()}1 <me>");
+                    Chat.SendMessage($"/marking {FlamesResolver.GetLocalizedBind()}1 <me>");
                 }
                 ImGui.SameLine();
                 if (ImGui.Button("ignore marker"))
                 {
-                    P.chat.SendMessage($"/marking {FlamesResolver.GetLocalizedIgnore()}1 <me>");
+                    Chat.SendMessage($"/marking {FlamesResolver.GetLocalizedIgnore()}1 <me>");
                 }
             }
             ImGui.Checkbox("Add random delay between markings (recommended)", ref P.config.FlamesEmulateDelay);

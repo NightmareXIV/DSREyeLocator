@@ -245,7 +245,7 @@ namespace DSREyeLocator.Core
                     PluginLog.Debug($"Sending chat command: {command}");
                     if (command.StartsWith("/"))
                     {
-                        P.chat.SendMessage(command);
+                        Chat.SendMessage(command);
                     }
                     else
                     {
@@ -255,7 +255,7 @@ namespace DSREyeLocator.Core
                 else
                 {
                     PluginLog.Debug($"Sending fake chat command: {command}");
-                    P.chat.SendMessage($"/echo {command}");
+                    Chat.SendMessage($"/echo {command}");
                 }
             }
             if (FlamesClearRequested)
