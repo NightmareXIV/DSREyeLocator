@@ -48,6 +48,5 @@ namespace DSREyeLocator
         public int ChangelogWindowVer = 0;
 
         public bool MapEffectDbg = false;
-        public List<(uint TerritoryType, List<(byte[] header, FFXIVIpcMapEffect st)> structs)> MapEffectLog = new();
     }
 }

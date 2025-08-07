@@ -8,6 +8,7 @@ using DSREyeLocator.Core;
 using DSREyeLocator.Gui;
 using ECommons.Automation;
 using ECommons.GameFunctions;
+using ECommons.Hooks;
 using ECommons.Logging;
 using ECommons.MathHelpers;
 using ECommons.Opcodes;
@@ -45,24 +46,10 @@ namespace DSREyeLocator
                 ws.AddWindow(configWindow);
                 overlayWindow = new();
                 ws.AddWindow(overlayWindow);
-                Svc.GameNetwork.NetworkMessage += OnNetworkMessage;
                 Svc.Framework.Update += Tick;
                 Svc.PluginInterface.UiBuilder.Draw += ws.Draw;
                 Svc.PluginInterface.UiBuilder.OpenConfigUi += delegate { configWindow.IsOpen = true; };
                 Svc.Condition.ConditionChange += Condition_ConditionChange;
-
-                if (DalamudReflector.TryGetDalamudStartInfo(out var info))
-                {
-                    OpcodeUpdater.DownloadOpcodes($"https://github.com/NightmareXIV/MyDalamudPlugins/raw/main/opcodes/{info.GameVersion}.txt",
-                        (dic) =>
-                        {
-                            if (dic.TryGetValue("MapEffect", out var code))
-                            {
-                                config.MapEventOpcode = code;
-                                PluginLog.Information($"Downloaded MapEffect opcode 0x{code:X}");
-                            }
-                        });
-                }
 
                 Headmarker.Init();
                 new ChangelogWindow(config, 1, delegate
@@ -74,13 +61,13 @@ namespace DSREyeLocator
                 });
                 Svc.ClientState.TerritoryChanged += TerrChanged;
                 Svc.Commands.AddHandler("/eye", new(delegate { configWindow.IsOpen = true; }) { HelpMessage = "Open configuration" });
+                MapEffect.Init(EyeResolver.OnMapEffect);
             });
         }
 
         public void Dispose()
         {
             Svc.Commands.RemoveHandler("/eye");
-            Svc.GameNetwork.NetworkMessage -= OnNetworkMessage;
             Svc.Framework.Update -= Tick;
             Svc.PluginInterface.UiBuilder.Draw -= ws.Draw;
             Svc.Condition.ConditionChange -= Condition_ConditionChange;
@@ -92,11 +79,6 @@ namespace DSREyeLocator
 
         private void TerrChanged(ushort e)
         {
-            if (P.config.MapEffectDbg)
-            {
-                P.config.MapEffectLog.RemoveAll(x => x.structs.Count == 0);
-                P.config.MapEffectLog.Add((e, new()));
-            }
         }
 
         private void Tick(object framework)

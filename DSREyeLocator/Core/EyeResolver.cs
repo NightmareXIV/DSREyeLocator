@@ -1,6 +1,7 @@
 ﻿using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Network;
 using Dalamud.Memory;
+using Dalamud.Plugin.Ipc.Exceptions;
 using DSREyeLocator.Gui;
 using ECommons.GameFunctions;
 using ECommons.Logging;
@@ -34,61 +35,27 @@ namespace DSREyeLocator.Core
         };
         internal const uint KingThordanNameID = 3632;
 
-        internal static void OnNetworkMessage(IntPtr dataPtr, ushort opCode, uint sourceActorId, uint targetActorId, NetworkMessageDirection direction)
+        internal static void OnMapEffect(long ptr, uint a2, ushort a3, ushort a4)
         {
-            Safe(delegate
+                
+            if (P.config.EyeEnabled && (Svc.ClientState.TerritoryType == DSRTerritory || P.config.Test))
             {
-            if (direction == NetworkMessageDirection.ZoneDown)
-            {
-                if (P.config.MapEffectDbg && opCode == P.config.MapEventOpcode)
+                PluginLog.Debug($"MapEffect: {a2}, {a3}, {a4}");
+                if (IsSanctity() || IsDeath())
                 {
-                    var list = P.config.MapEffectLog.Last();
-                    var eff = *(FFXIVIpcMapEffect*)dataPtr;
-                        if (list.TerritoryType == Svc.ClientState.TerritoryType)
-                        {
-                            var header = MemoryHelper.ReadRaw(dataPtr - 16, 16);
-                            list.structs.Add((header, eff));
-                        }
-                        Svc.Chat.Print(new() { Message = $"{eff.unk_4:X4} {eff.unk_8:X2} {eff.unk_10:X2} {eff.unk_12:X2} {eff.unk_14:X2}", Type = Dalamud.Game.Text.XivChatType.Ls8 });
-                        Svc.PluginInterface.SavePluginConfig(P.config);
-                    }
-                    if (Svc.ClientState.TerritoryType == 838 && P.configWindow.IsOpen && !TabMainConfig.OpcodeFound)
+                    if(EyesPositions.ContainsKey((int)a2))
                     {
-                        var data = (FFXIVIpcMapEffect*)dataPtr;
-                        //80030043, 00080004, 0003, 0000
-                        if (data->InstanceContentID == 0x80030043
-                            && data->unk_4 == 0x00080004
-                            && data->unk_8 == 0x03
-                            && data->unk_12 == 0x00)
+                        if(a3 == 1)
                         {
-                            TabMainConfig.OpcodeFound = true;
-                            P.config.MapEventOpcode = opCode;
-                            Svc.PluginInterface.SavePluginConfig(P.config);
+                            EyePos = (int)a2;
                         }
-                    }
-                    if (P.config.EyeEnabled && (Svc.ClientState.TerritoryType == DSRTerritory || P.config.Test) && opCode == P.config.MapEventOpcode)
-                    {
-                        var data = (FFXIVIpcMapEffect*)dataPtr;
-                        PluginLog.Debug($"MapEvent: {data->InstanceContentID:X8}, {data->unk_4:X8}, {data->unk_8:X2}, {data->unk_10:X2}, {data->unk_12:X4}");
-                        if (IsSanctity() || IsDeath())
+                        else
                         {
-                            if (data->unk_4 == 0x00020001)
-                            {
-                                EyePos = data->unk_8;
-                                if (!EyesPositions.ContainsKey(EyePos))
-                                {
-                                    Svc.Chat.PrintError("No data for this eye position was present");
-                                    Svc.Chat.PrintError($"MapEvent: {data->InstanceContentID:X8}, {data->unk_4:X8}, {data->unk_8:X2}, {data->unk_10:X2}, {data->unk_12:X4}");
-                                }
-                            }
-                            else if (data->unk_4 == 0x00400020)
-                            {
-                                EyePos = -1;
-                            }
+                            EyePos = -1;
                         }
                     }
                 }
-            });
+            }
         }
 
 
