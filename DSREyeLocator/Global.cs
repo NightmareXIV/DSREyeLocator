@@ -20,3 +20,4 @@ global using static DSREyeLocator.DSREyeLocator;
 global using Dalamud.Game.ClientState.Conditions;
 global using static DSREyeLocator.Core.EyeResolver;
 global using static DSREyeLocator.Core.FlamesResolver;
+global using ECommons.DalamudServices.Legacy;

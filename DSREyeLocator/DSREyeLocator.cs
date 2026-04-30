@@ -52,14 +52,6 @@ namespace DSREyeLocator
                 Svc.Condition.ConditionChange += Condition_ConditionChange;
 
                 Headmarker.Init();
-                new ChangelogWindow(config, 1, delegate
-                {
-                    ImGuiEx.Text("DSR Eye Locator has been renamed into DSR Toolbox and contains few other functions \n" +
-                        "to help with DSR. " +
-                        "\n\nI may add some other in future as I progress though the fight/do reclears of it." +
-                        "\nBy default only eye locator is enabled, matching previous behavior of the plugin.  ");
-                });
-                Svc.ClientState.TerritoryChanged += TerrChanged;
                 Svc.Commands.AddHandler("/eye", new(delegate { configWindow.IsOpen = true; }) { HelpMessage = "Open configuration" });
                 MapEffect.Init(EyeResolver.OnMapEffect);
             });
@@ -73,12 +65,7 @@ namespace DSREyeLocator
             Svc.Condition.ConditionChange -= Condition_ConditionChange;
             Safe(overlayWindow.Dispose);
             Safe(Headmarker.Dispose);
-            Svc.ClientState.TerritoryChanged -= TerrChanged;
             ECommonsMain.Dispose();
-        }
-
-        private void TerrChanged(ushort e)
-        {
         }
 
         private void Tick(object framework)
